@@ -1,0 +1,42 @@
+<!doctype html>
+<head>
+	<title>React-Input-Autosize Example</title>
+	<link rel="stylesheet" href="example.css">
+</head>
+<body>
+	<div class="container">
+		<h1>React Select</h1>
+		<h2><a href="http://github.com/JedWatson/react-input-autosize">View project on GitHub</a></h2>
+		<form><div id="example"></div></form>
+		<div class="hint">
+			Type in the text field above to test the auto-size input.
+		</div>
+		<div class="footer">
+			Copyright &copy; Jed Watson 2014. MIT Licensed.
+		</div>
+	</div>
+	<script src="http://fb.me/react-0.11.2.js"></script>
+	<script src="../lib/AutosizeInput.js"></script>
+	<script>
+		var App = React.createClass({
+			getInitialState: function() {
+				return {
+					inputValue: ''
+				};
+			},
+			updateInputValue: function(event) {
+				this.setState({
+					inputValue: event.target.value
+				});
+			},
+			render: function() {
+				return AutosizeInput({
+					value: this.state.inputValue,
+					onChange: this.updateInputValue
+				});
+			}
+		});
+
+		React.renderComponent(App(), document.getElementById('example'));
+	</script>
+</body>
