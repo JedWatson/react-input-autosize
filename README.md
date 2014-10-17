@@ -1,4 +1,4 @@
 react-input-autosize
 ====================
 
-Auto-resizing input field for React
+Auto-resizing input component for React
