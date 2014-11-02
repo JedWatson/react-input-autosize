@@ -15,7 +15,7 @@
 			Copyright &copy; Jed Watson 2014. MIT Licensed.
 		</div>
 	</div>
-	<script src="http://fb.me/react-0.11.2.js"></script>
+	<script src="http://fb.me/react-0.12.0.js"></script>
 	<script src="../lib/AutosizeInput.js"></script>
 	<script>
 		var App = React.createClass({
@@ -30,13 +30,13 @@
 				});
 			},
 			render: function() {
-				return AutosizeInput({
+				return React.createElement(AutosizeInput, {
 					value: this.state.inputValue,
 					onChange: this.updateInputValue
 				});
 			}
 		});
 
-		React.renderComponent(App(), document.getElementById('example'));
+		React.render(React.createElement(App), document.getElementById('example'));
 	</script>
 </body>
