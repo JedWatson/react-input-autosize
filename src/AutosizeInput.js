@@ -4,9 +4,15 @@ if (typeof require !== 'undefined') {
 
 var AutosizeInput = React.createClass({
 	
+	getDefaultProps: function() {
+		return {
+			minWidth: 1
+		};
+	},
+	
 	getInitialState: function() {
 		return {
-			inputWidth: 1
+			inputWidth: this.props.minWidth
 		};
 	},
 	
@@ -35,6 +41,9 @@ var AutosizeInput = React.createClass({
 			return;
 		}
 		var newInputWidth = this.refs.sizer.getDOMNode().scrollWidth;
+		if (newInputWidth < this.props.minWidth) {
+			newInputWidth = this.props.minWidth;
+		}
 		if (newInputWidth !== this.state.inputWidth) {
 			this.setState({
 				inputWidth: this.refs.sizer.getDOMNode().scrollWidth
