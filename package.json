@@ -26,6 +26,11 @@
     "vinyl-source-stream": "~1.0.0",
     "watchify": "~2.1.1"
   },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  },
   "scripts": {
     "test": "echo \"no tests yet\" && exit 0"
   },
