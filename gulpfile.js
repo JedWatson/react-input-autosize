@@ -154,7 +154,7 @@ gulp.task('prepare-dist', function(done) {
 	del([DIST_PATH], done);
 });
 
-gulp.task('build', ['prepare-dist'], function() {
+gulp.task('build', ['prepare-dist', 'build-examples'], function() {
 	var dest = DIST_PATH;
 	var bundle = browserify({ hasExports: true });
 	DEPENDENCIES.forEach(function(pkg) {

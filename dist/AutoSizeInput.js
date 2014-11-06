@@ -1,7 +1,21 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"react-input-autosize":[function(require,module,exports){
 var React = require('react');
 
-var AutosizeInput = React.createClass({displayName: 'AutosizeInput',
+var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
+
+var AutosizeInput = React.createClass({
+	
+	displayName: 'AutosizeInput',
+
+	propTypes: {
+		value: React.PropTypes.any,                 // field value
+		defaultValue: React.PropTypes.any,          // default field value
+		onChange: React.PropTypes.func,             // onChange handler: function(newValue) {}
+		style: React.PropTypes.object,              // css styles for the outer element
+		className: React.PropTypes.string,          // className for the outer element
+		inputStyle: React.PropTypes.object,         // css styles for the input element
+		inputClassName: React.PropTypes.string      // className for the input element
+	},
 	
 	getDefaultProps: function() {
 		return {
@@ -30,7 +44,6 @@ var AutosizeInput = React.createClass({displayName: 'AutosizeInput',
 		}
 		var inputStyle = window.getComputedStyle(this.refs.input.getDOMNode());
 		var widthNode = this.refs.sizer.getDOMNode();
-		widthNode.style.padding = inputStyle.padding;
 		widthNode.style.fontSize = inputStyle.fontSize;
 		widthNode.style.fontFamily = inputStyle.fontFamily;
 	},
@@ -52,18 +65,18 @@ var AutosizeInput = React.createClass({displayName: 'AutosizeInput',
 	
 	render: function() {
 		
-		var valueString = this.props.value || '',
-			valueWithNBSP = valueString.replace(/ /g, '&nbsp;');
+		var nbspValue = (this.props.value || '').replace(/ /g, '&nbsp;');
 		
-		var inputStyle = this.props.style || {};
+		var wrapperStyle = this.props.style || {};
+		wrapperStyle.display = 'inline-block';
+		
+		var inputStyle = this.props.inputStyle || {};
 		inputStyle.width = this.state.inputWidth;
 		
-		var sizerStyle = { position: 'absolute', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
-		
 		return (
-			React.createElement("div", null, 
-				React.createElement("input", {ref: "input", style: inputStyle, onChange: this.props.onChange, value: this.props.value}), 
-				React.createElement("div", {ref: "sizer", style: sizerStyle, dangerouslySetInnerHTML: { __html: valueWithNBSP}})
+			React.createElement("div", {className: this.props.className, style: wrapperStyle}, 
+				React.createElement("input", React.__spread({},  this.props, {ref: "input", className: this.props.inputClassName, style: inputStyle})), 
+				React.createElement("div", {ref: "sizer", style: sizerStyle, dangerouslySetInnerHTML: { __html: nbspValue}})
 			)
 		);
 		
