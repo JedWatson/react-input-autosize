@@ -1,6 +1,4 @@
-if (typeof require !== 'undefined') {
-	var React = require('react');
-}
+var React = require('react');
 
 var AutosizeInput = React.createClass({
 	
@@ -72,6 +70,4 @@ var AutosizeInput = React.createClass({
 	
 });
 
-if (typeof module !== 'undefined') {
-	module.exports = AutosizeInput;
-}
+module.exports = AutosizeInput;
