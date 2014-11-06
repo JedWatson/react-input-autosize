@@ -1,6 +1,20 @@
 var React = require('react');
 
+var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
+
 var AutosizeInput = React.createClass({
+	
+	displayName: 'AutosizeInput',
+
+	propTypes: {
+		value: React.PropTypes.any,                 // field value
+		defaultValue: React.PropTypes.any,          // default field value
+		onChange: React.PropTypes.func,             // onChange handler: function(newValue) {}
+		style: React.PropTypes.object,              // css styles for the outer element
+		className: React.PropTypes.string,          // className for the outer element
+		inputStyle: React.PropTypes.object,         // css styles for the input element
+		inputClassName: React.PropTypes.string      // className for the input element
+	},
 	
 	getDefaultProps: function() {
 		return {
@@ -29,7 +43,6 @@ var AutosizeInput = React.createClass({
 		}
 		var inputStyle = window.getComputedStyle(this.refs.input.getDOMNode());
 		var widthNode = this.refs.sizer.getDOMNode();
-		widthNode.style.padding = inputStyle.padding;
 		widthNode.style.fontSize = inputStyle.fontSize;
 		widthNode.style.fontFamily = inputStyle.fontFamily;
 	},
@@ -51,18 +64,18 @@ var AutosizeInput = React.createClass({
 	
 	render: function() {
 		
-		var valueString = this.props.value || '',
-			valueWithNBSP = valueString.replace(/ /g, '&nbsp;');
+		var nbspValue = (this.props.value || '').replace(/ /g, '&nbsp;');
 		
-		var inputStyle = this.props.style || {};
+		var wrapperStyle = this.props.style || {};
+		wrapperStyle.display = 'inline-block';
+		
+		var inputStyle = this.props.inputStyle || {};
 		inputStyle.width = this.state.inputWidth;
 		
-		var sizerStyle = { position: 'absolute', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
-		
 		return (
-			<div>
-				<input ref="input" style={inputStyle} onChange={this.props.onChange} value={this.props.value} />
-				<div ref="sizer" style={sizerStyle} dangerouslySetInnerHTML={{ __html: valueWithNBSP }} />
+			<div className={this.props.className} style={wrapperStyle}>
+				<input {...this.props} ref="input" className={this.props.inputClassName} style={inputStyle} />
+				<div ref="sizer" style={sizerStyle} dangerouslySetInnerHTML={{ __html: nbspValue }} />
 			</div>
 		);
 		
