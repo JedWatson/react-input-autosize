@@ -51,13 +51,13 @@ var AutosizeInput = React.createClass({
 		if (!this.isMounted()) {
 			return;
 		}
-		var newInputWidth = this.refs.sizer.getDOMNode().scrollWidth;
+		var newInputWidth = this.refs.sizer.getDOMNode().scrollWidth + 2;
 		if (newInputWidth < this.props.minWidth) {
 			newInputWidth = this.props.minWidth;
 		}
 		if (newInputWidth !== this.state.inputWidth) {
 			this.setState({
-				inputWidth: this.refs.sizer.getDOMNode().scrollWidth
+				inputWidth: newInputWidth
 			});
 		}
 	},
