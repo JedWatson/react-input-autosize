@@ -1,4 +1,5 @@
 var browserify = require('browserify'),
+	shim = require('browserify-shim'),
 	chalk = require('chalk'),
 	del = require('del'),
 	gulp = require('gulp'),
@@ -16,17 +17,21 @@ var browserify = require('browserify'),
  * Constants
  */
 
-var PACKAGE_NAME = require('./package.json').name;
-var PACKAGE_FILE = 'AutoSizeInput.js';
-var DEPENDENCIES = ['react'];
-
 var SRC_PATH = './src';
 var DIST_PATH = './dist';
 
+var PACKAGE_NAME = require('./package.json').name;
+var PACKAGE_FILE = 'AutosizeInput.js';
+var STANDALONE_NAME = 'AutosizeInput';
+var DEPENDENCIES = ['react'];
+
+var EXAMPLE_DIST = './example/dist';
 var EXAMPLE_APP = './example/src/app.js';
 var EXAMPLE_LESS = './example/src/app.less';
-var EXAMPLE_FILES = ['./example/src/index.html'];
-var EXAMPLE_DIST = './example/dist';
+var EXAMPLE_FILES = [
+	'./example/src/index.html',
+	'./example/src/standalone.html'
+];
 
 
 /**
@@ -77,7 +82,8 @@ gulp.task('prepare:examples', function(done) {
 
 function buildExampleFiles() {
 	return gulp.src(EXAMPLE_FILES)
-		.pipe(gulp.dest(EXAMPLE_DIST));
+		.pipe(gulp.dest(EXAMPLE_DIST))
+		.pipe(connect.reload());
 }
 
 gulp.task('dev:build:example:files', buildExampleFiles);
@@ -107,38 +113,40 @@ gulp.task('build:example:css', ['prepare:examples'], buildExampleCSS);
 
 function buildExampleScripts(dev) {
 	
-	return function() {
+	var dest = EXAMPLE_DIST;
 	
-		var dest = EXAMPLE_DIST;
-		
-		var opts = dev ? watchify.args : {};
-		
-		opts.debug = dev ? true : false;
-		opts.hasExports = true;
+	var opts = dev ? watchify.args : {};
+	opts.debug = dev ? true : false;
+	opts.hasExports = true;
+	
+	return function() {
 		
 		var common = browserify(opts),
-			bundle = browserify(opts),
-			example = browserify(opts);
+			bundle = browserify(opts).require(SRC_PATH + '/' + PACKAGE_FILE, { expose: PACKAGE_NAME }),
+			example = browserify(opts).exclude(PACKAGE_NAME).add(EXAMPLE_APP),
+			standalone = browserify(SRC_PATH + '/' + PACKAGE_FILE, { standalone: STANDALONE_NAME })
+				.transform(reactify)
+				.transform(shim);
 		
 		DEPENDENCIES.forEach(function(pkg) {
 			common.require(pkg);
 			bundle.exclude(pkg);
 			example.exclude(pkg);
+			standalone.exclude(pkg);
 		});
-		
-		bundle.require(SRC_PATH + '/' + PACKAGE_FILE, { expose: PACKAGE_NAME });
-		example.exclude(PACKAGE_NAME).add(EXAMPLE_APP);
 		
 		if (dev) {
 			watchBundle(common, 'common.js', dest);
 			watchBundle(bundle, 'bundle.js', dest);
 			watchBundle(example, 'app.js', dest);
+			watchBundle(standalone, 'standalone.js', dest);
 		}
 		
 		return merge(
 			doBundle(common, 'common.js', dest),
 			doBundle(bundle, 'bundle.js', dest),
-			doBundle(example, 'app.js', dest)
+			doBundle(example, 'app.js', dest),
+			doBundle(standalone, 'standalone.js', dest)
 		);
 		
 	}
@@ -159,6 +167,15 @@ gulp.task('build:examples', [
 	'build:example:scripts'
 ]);
 
+gulp.task('watch:examples', [
+	'dev:build:example:files',
+	'dev:build:example:css',
+	'dev:build:example:scripts'
+], function() {
+	gulp.watch([EXAMPLE_FILES], ['dev:build:example:files']);
+	gulp.watch([EXAMPLE_LESS], ['dev:build:example:css']);
+});
+
 
 /**
  * Serve task for local development
@@ -177,10 +194,10 @@ gulp.task('dev:server', function() {
  * Development task
  */
 
-gulp.task('dev', ['dev:server', 'dev:build:example:files', 'dev:build:example:css', 'dev:build:example:scripts'], function() {
-	gulp.watch([EXAMPLE_FILES], ['dev:build:example:files']);
-	gulp.watch([EXAMPLE_LESS], ['dev:build:example:css']);
-});
+gulp.task('dev', [
+	'dev:server',
+	'watch:examples'
+]);
 
 
 /**
@@ -192,18 +209,25 @@ gulp.task('prepare:dist', function(done) {
 });
 
 gulp.task('build:dist', ['prepare:dist'], function() {
-	var dest = DIST_PATH;
-	var bundle = browserify({ hasExports: true });
+	
+	var standalone = browserify(SRC_PATH + '/' + PACKAGE_FILE, {
+			standalone: STANDALONE_NAME
+		})
+		.transform(reactify)
+		.transform(shim);
+	
 	DEPENDENCIES.forEach(function(pkg) {
-		bundle.exclude(pkg);
+		standalone.exclude(pkg);
 	});
-	bundle.require(SRC_PATH + '/' + PACKAGE_FILE, { expose: PACKAGE_NAME });
-	return doBundle(bundle, PACKAGE_FILE, dest);
+	
+	return doBundle(standalone, PACKAGE_FILE, DIST_PATH);
+	
 });
 
-gulp.task('build', ['build:dist', 'build:examples'], function() {
-
-});
+gulp.task('build', [
+	'build:dist',
+	'build:examples'
+]);
 
 
 /**
