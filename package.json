@@ -27,6 +27,7 @@
     "vinyl-source-stream": "~1.0.0",
     "watchify": "~2.1.1"
   },
+  "browser": "src/AutosizeInput.js",
   "browserify": {
     "transform": [
       "reactify"
