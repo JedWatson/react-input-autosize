@@ -4,6 +4,7 @@ var pkg = require('./package.json'),
 	chalk = require('chalk'),
 	del = require('del'),
 	gulp = require('gulp'),
+	bump = require('gulp-bump'),
 	connect = require('gulp-connect'),
 	deploy = require("gulp-gh-pages"),
 	less = require('gulp-less'),
@@ -246,9 +247,32 @@ gulp.task('build', [
 
 
 /**
- * Deploy task
+ * Version bump tasks
  */
 
-gulp.task('deploy', ['build:examples'], function() {
+gulp.task('bump', function () {
+	return gulp.src(['./package.json', './bower.json'])
+		.pipe(bump())
+		.pipe(gulp.dest('./'));
+});
+
+gulp.task('bump:minor', function () {
+	return gulp.src(['./package.json', './bower.json'])
+		.pipe(bump({ type: 'minor' }))
+		.pipe(gulp.dest('./'));
+});
+
+gulp.task('bump:major', function () {
+	return gulp.src(['./package.json', './bower.json'])
+		.pipe(bump({ type:'major' }))
+		.pipe(gulp.dest('./'));
+});
+
+
+/**
+ * Deploy tasks
+ */
+
+gulp.task('deploy:examples', ['build:examples'], function() {
 	return gulp.src(EXAMPLE_DIST_PATH + '/**/*').pipe(deploy());
 });
