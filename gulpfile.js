@@ -1,4 +1,5 @@
-var browserify = require('browserify'),
+var pkg = require('./package.json'),
+	browserify = require('browserify'),
 	shim = require('browserify-shim'),
 	chalk = require('chalk'),
 	del = require('del'),
@@ -6,6 +7,9 @@ var browserify = require('browserify'),
 	connect = require('gulp-connect'),
 	deploy = require("gulp-gh-pages"),
 	less = require('gulp-less'),
+	rename = require('gulp-rename'),
+	streamify = require('gulp-streamify'),
+	uglify = require('gulp-uglify'),
 	gutil = require('gulp-util'),
 	merge = require('merge-stream'),
 	reactify = require('reactify'),
@@ -21,7 +25,7 @@ var SRC_PATH = 'src';
 var DIST_PATH = 'dist';
 
 var PACKAGE_FILE = 'AutosizeInput.js';
-var PACKAGE_NAME = 'react-input-autosize';
+var PACKAGE_NAME = pkg.name;
 var COMPONENT_NAME = 'AutosizeInput';
 
 var DEPENDENCIES = ['react'];
@@ -223,7 +227,15 @@ gulp.task('build:dist', ['prepare:dist'], function() {
 		standalone.exclude(pkg);
 	});
 	
-	return doBundle(standalone, PACKAGE_FILE, DIST_PATH);
+	return standalone.bundle()
+		.on('error', function(e) {
+			gutil.log('Browserify Error', e);
+		})
+		.pipe(source(PACKAGE_NAME + '.js'))
+		.pipe(gulp.dest(DIST_PATH))
+		.pipe(rename(PACKAGE_NAME + '.min.js'))
+		.pipe(streamify(uglify()))
+		.pipe(gulp.dest(DIST_PATH));
 	
 });
 
