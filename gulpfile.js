@@ -20,17 +20,20 @@ var browserify = require('browserify'),
 var SRC_PATH = 'src';
 var DIST_PATH = 'dist';
 
-var PACKAGE_NAME = require('./package.json').name;
 var PACKAGE_FILE = 'AutosizeInput.js';
-var STANDALONE_NAME = 'AutosizeInput';
+var PACKAGE_NAME = 'react-input-autosize';
+var COMPONENT_NAME = 'AutosizeInput';
+
 var DEPENDENCIES = ['react'];
 
-var EXAMPLE_DIST = 'example/dist';
-var EXAMPLE_APP = 'example/src/app.js';
-var EXAMPLE_LESS = 'example/src/app.less';
+var EXAMPLE_SRC_PATH = 'example/src';
+var EXAMPLE_DIST_PATH = 'example/dist';
+
+var EXAMPLE_APP = 'app.js';
+var EXAMPLE_LESS = 'app.less';
 var EXAMPLE_FILES = [
-	'example/src/index.html',
-	'example/src/standalone.html'
+	'index.html',
+	'standalone.html'
 ];
 
 
@@ -72,7 +75,7 @@ function watchBundle(target, name, dest) {
  */
 
 gulp.task('prepare:examples', function(done) {
-	del([EXAMPLE_DIST], done);
+	del([EXAMPLE_DIST_PATH], done);
 });
 
 
@@ -81,8 +84,8 @@ gulp.task('prepare:examples', function(done) {
  */
 
 function buildExampleFiles() {
-	return gulp.src(EXAMPLE_FILES)
-		.pipe(gulp.dest(EXAMPLE_DIST))
+	return gulp.src(EXAMPLE_FILES.map(function(i) { return EXAMPLE_SRC_PATH + '/' + i }))
+		.pipe(gulp.dest(EXAMPLE_DIST_PATH))
 		.pipe(connect.reload());
 }
 
@@ -95,9 +98,9 @@ gulp.task('build:example:files', ['prepare:examples'], buildExampleFiles);
  */
 
 function buildExampleCSS() {
-	return gulp.src(EXAMPLE_LESS)
+	return gulp.src(EXAMPLE_SRC_PATH + '/' + EXAMPLE_LESS)
 		.pipe(less())
-		.pipe(gulp.dest(EXAMPLE_DIST))
+		.pipe(gulp.dest(EXAMPLE_DIST_PATH))
 		.pipe(connect.reload());
 }
 
@@ -113,7 +116,7 @@ gulp.task('build:example:css', ['prepare:examples'], buildExampleCSS);
 
 function buildExampleScripts(dev) {
 	
-	var dest = EXAMPLE_DIST;
+	var dest = EXAMPLE_DIST_PATH;
 	
 	var opts = dev ? watchify.args : {};
 	opts.debug = dev ? true : false;
@@ -123,8 +126,8 @@ function buildExampleScripts(dev) {
 		
 		var common = browserify(opts),
 			bundle = browserify(opts).require('./' + SRC_PATH + '/' + PACKAGE_FILE, { expose: PACKAGE_NAME }),
-			example = browserify(opts).exclude(PACKAGE_NAME).add('./' + EXAMPLE_APP),
-			standalone = browserify('./' + SRC_PATH + '/' + PACKAGE_FILE, { standalone: STANDALONE_NAME })
+			example = browserify(opts).exclude(PACKAGE_NAME).add('./' + EXAMPLE_SRC_PATH + '/' + EXAMPLE_APP),
+			standalone = browserify('./' + SRC_PATH + '/' + PACKAGE_FILE, { standalone: COMPONENT_NAME })
 				.transform(reactify)
 				.transform(shim);
 		
@@ -172,8 +175,8 @@ gulp.task('watch:examples', [
 	'dev:build:example:css',
 	'dev:build:example:scripts'
 ], function() {
-	gulp.watch([EXAMPLE_FILES], ['dev:build:example:files']);
-	gulp.watch([EXAMPLE_LESS], ['dev:build:example:css']);
+	gulp.watch(EXAMPLE_FILES.map(function(i) { return EXAMPLE_SRC_PATH + '/' + i }), ['dev:build:example:files']);
+	gulp.watch([EXAMPLE_SRC_PATH + './' + EXAMPLE_LESS], ['dev:build:example:css']);
 });
 
 
@@ -211,7 +214,7 @@ gulp.task('prepare:dist', function(done) {
 gulp.task('build:dist', ['prepare:dist'], function() {
 	
 	var standalone = browserify('./' + SRC_PATH + '/' + PACKAGE_FILE, {
-			standalone: STANDALONE_NAME
+			standalone: COMPONENT_NAME
 		})
 		.transform(reactify)
 		.transform(shim);
@@ -235,5 +238,5 @@ gulp.task('build', [
  */
 
 gulp.task('deploy', ['build:examples'], function() {
-	return gulp.src(EXAMPLE_DIST + '/**/*').pipe(deploy());
+	return gulp.src(EXAMPLE_DIST_PATH + '/**/*').pipe(deploy());
 });
