@@ -26,7 +26,7 @@ var SRC_PATH = 'src';
 var DIST_PATH = 'dist';
 
 var PACKAGE_FILE = 'AutosizeInput.js';
-var PACKAGE_NAME = 'auto-size-input';
+var PACKAGE_NAME = 'react-input-autosize';
 var COMPONENT_NAME = 'AutosizeInput';
 
 var DEPENDENCIES = ['react'];
@@ -264,10 +264,11 @@ gulp.task('bump:major', getBumpTask('major'));
 
 
 /**
- * Git tag tasks
+ * Git tag task
+ * (version *must* be bumped first)
  */
 
-function doTag() {
+gulp.task('publish:tag', function() {
 	var pkg = require('./package.json');
 	var v = 'v' + pkg.version;
 	var message = 'Release ' + v;
@@ -277,36 +278,27 @@ function doTag() {
 		.pipe(git.tag(v, message))
 		.pipe(git.push('origin', 'master', '--tags'))
 		.pipe(gulp.dest('./'));
-}
-
-gulp.task('tag', ['bump'], doTag);
-gulp.task('tag:minor', ['bump:minor'], doTag);
-gulp.task('tag:major', ['bump:major'], doTag);
+});
 
 
 /**
- * npm publish tasks
+ * npm publish task
+ * * (version *must* be bumped first)
  */
 
-function doPublish(done) {
+gulp.task('publish:npm', function(done) {
 	require('child_process')
 		.spawn('npm', ['publish'], { stdio: 'inherit' })
 		.on('close', done);
-}
-
-gulp.task('publish', ['tag'], doPublish);
-gulp.task('publish:minor', ['tag:minor'], doPublish);
-gulp.task('publish:major', ['tag:major'], doPublish);
+});
 
 
 /**
  * Deploy tasks
  */
 
-gulp.task('deploy:examples', ['build:examples'], function() {
+gulp.task('publish:examples', ['build:examples'], function() {
 	return gulp.src(EXAMPLE_DIST_PATH + '/**/*').pipe(deploy());
 });
 
-gulp.task('deploy', ['publish', 'deploy:examples']);
-gulp.task('deploy:minor', ['publish:minor', 'deploy:examples']);
-gulp.task('deploy:major', ['publish:major', 'deploy:examples']);
+gulp.task('release', ['publish:tag', 'publish:npm', 'publish:examples']);
