@@ -17,20 +17,20 @@ var browserify = require('browserify'),
  * Constants
  */
 
-var SRC_PATH = './src';
-var DIST_PATH = './dist';
+var SRC_PATH = 'src';
+var DIST_PATH = 'dist';
 
 var PACKAGE_NAME = require('./package.json').name;
 var PACKAGE_FILE = 'AutosizeInput.js';
 var STANDALONE_NAME = 'AutosizeInput';
 var DEPENDENCIES = ['react'];
 
-var EXAMPLE_DIST = './example/dist';
-var EXAMPLE_APP = './example/src/app.js';
-var EXAMPLE_LESS = './example/src/app.less';
+var EXAMPLE_DIST = 'example/dist';
+var EXAMPLE_APP = 'example/src/app.js';
+var EXAMPLE_LESS = 'example/src/app.less';
 var EXAMPLE_FILES = [
-	'./example/src/index.html',
-	'./example/src/standalone.html'
+	'example/src/index.html',
+	'example/src/standalone.html'
 ];
 
 
@@ -122,9 +122,9 @@ function buildExampleScripts(dev) {
 	return function() {
 		
 		var common = browserify(opts),
-			bundle = browserify(opts).require(SRC_PATH + '/' + PACKAGE_FILE, { expose: PACKAGE_NAME }),
-			example = browserify(opts).exclude(PACKAGE_NAME).add(EXAMPLE_APP),
-			standalone = browserify(SRC_PATH + '/' + PACKAGE_FILE, { standalone: STANDALONE_NAME })
+			bundle = browserify(opts).require('./' + SRC_PATH + '/' + PACKAGE_FILE, { expose: PACKAGE_NAME }),
+			example = browserify(opts).exclude(PACKAGE_NAME).add('./' + EXAMPLE_APP),
+			standalone = browserify('./' + SRC_PATH + '/' + PACKAGE_FILE, { standalone: STANDALONE_NAME })
 				.transform(reactify)
 				.transform(shim);
 		
@@ -210,7 +210,7 @@ gulp.task('prepare:dist', function(done) {
 
 gulp.task('build:dist', ['prepare:dist'], function() {
 	
-	var standalone = browserify(SRC_PATH + '/' + PACKAGE_FILE, {
+	var standalone = browserify('./' + SRC_PATH + '/' + PACKAGE_FILE, {
 			standalone: STANDALONE_NAME
 		})
 		.transform(reactify)
