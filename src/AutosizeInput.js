@@ -62,6 +62,18 @@ var AutosizeInput = React.createClass({
 		}
 	},
 	
+	getInput: function() {
+		return this.refs.input;
+	},
+	
+	focus: function() {
+		this.refs.input.getDOMNode().focus();
+	},
+	
+	select: function() {
+		this.refs.input.getDOMNode().select();
+	},
+	
 	render: function() {
 		
 		var nbspValue = (this.props.value || '').replace(/ /g, '&nbsp;');
