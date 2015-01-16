@@ -14,6 +14,7 @@ var browserify = require('browserify'),
 	gutil = require('gulp-util'),
 	merge = require('merge-stream'),
 	reactify = require('reactify'),
+	to5 = require('gulp-6to5'),
 	source = require('vinyl-source-stream'),
 	watchify = require('watchify');
 
@@ -23,6 +24,7 @@ var browserify = require('browserify'),
  */
 
 var SRC_PATH = 'src';
+var LIB_PATH = 'lib';
 var DIST_PATH = 'dist';
 
 var PACKAGE_FILE = 'AutosizeInput.js';
@@ -209,16 +211,31 @@ gulp.task('dev', [
 
 
 /**
- * Build task
+ * Build tasks for lib
+ */
+
+gulp.task('prepare:lib', function(done) {
+	del([LIB_PATH], done);
+});
+
+gulp.task('build:lib', ['prepare:lib'], function(done) {
+	return gulp.src(SRC_PATH + '/**/*.js')
+		.pipe(to5())
+		.pipe(gulp.dest(LIB_PATH));
+});
+
+
+/**
+ * Build tasks for dist
  */
 
 gulp.task('prepare:dist', function(done) {
 	del([DIST_PATH], done);
 });
 
-gulp.task('build:dist', ['prepare:dist'], function() {
+gulp.task('build:dist', ['prepare:dist', 'build:lib'], function() {
 	
-	var standalone = browserify('./' + SRC_PATH + '/' + PACKAGE_FILE, {
+	var standalone = browserify('./' + LIB_PATH + '/' + PACKAGE_FILE, {
 			standalone: COMPONENT_NAME
 		})
 		.transform(reactify)
