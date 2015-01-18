@@ -14,6 +14,7 @@ var browserify = require('browserify'),
 	gutil = require('gulp-util'),
 	merge = require('merge-stream'),
 	reactify = require('reactify'),
+	to5ify = require('6to5ify'),
 	to5 = require('gulp-6to5'),
 	source = require('vinyl-source-stream'),
 	watchify = require('watchify');
@@ -131,11 +132,14 @@ function buildExampleScripts(dev) {
 	
 	return function() {
 		
-		var common = browserify(opts),
-			bundle = browserify(opts).require('./' + SRC_PATH + '/' + PACKAGE_FILE, { expose: PACKAGE_NAME }),
-			example = browserify(opts).exclude(PACKAGE_NAME).add('./' + EXAMPLE_SRC_PATH + '/' + EXAMPLE_APP),
+		var common = browserify(opts)
+				.transform(to5ify),
+			bundle = browserify(opts).require('./' + SRC_PATH + '/' + PACKAGE_FILE, { expose: PACKAGE_NAME })
+				.transform(to5ify),
+			example = browserify(opts).exclude(PACKAGE_NAME).add('./' + EXAMPLE_SRC_PATH + '/' + EXAMPLE_APP)
+				.transform(to5ify),
 			standalone = browserify('./' + SRC_PATH + '/' + PACKAGE_FILE, { standalone: COMPONENT_NAME })
-				.transform(reactify)
+				.transform(to5ify)
 				.transform(shim);
 		
 		DEPENDENCIES.forEach(function(pkg) {
