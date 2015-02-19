@@ -45,13 +45,23 @@ var AutosizeInput = React.createClass({
 		var widthNode = this.refs.sizer.getDOMNode();
 		widthNode.style.fontSize = inputStyle.fontSize;
 		widthNode.style.fontFamily = inputStyle.fontFamily;
+		if (this.props.placeholder) {
+			widthNode = this.refs.placeholderSizer.getDOMNode();
+			widthNode.style.fontSize = inputStyle.fontSize;
+			widthNode.style.fontFamily = inputStyle.fontFamily;
+		}
 	},
 	
 	updateInputWidth: function() {
 		if (!this.isMounted()) {
 			return;
 		}
-		var newInputWidth = this.refs.sizer.getDOMNode().scrollWidth + 2;
+		var newInputWidth;
+		if (this.props.placeholder) {
+			newInputWidth = Math.max(this.refs.sizer.getDOMNode().scrollWidth, this.refs.placeholderSizer.getDOMNode().scrollWidth) + 2;
+		} else {
+			newInputWidth = this.refs.sizer.getDOMNode().scrollWidth + 2;
+		}
 		if (newInputWidth < this.props.minWidth) {
 			newInputWidth = this.props.minWidth;
 		}
@@ -84,10 +94,13 @@ var AutosizeInput = React.createClass({
 		var inputStyle = this.props.inputStyle || {};
 		inputStyle.width = this.state.inputWidth;
 		
+		var placeholder = this.props.placeholder ? <div ref="placeholderSizer" styl={sizerStyle}>{this.props.placeholder}</div> : null;
+		
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				<input {...this.props} ref="input" className={this.props.inputClassName} style={inputStyle} />
 				<div ref="sizer" style={sizerStyle} dangerouslySetInnerHTML={{ __html: nbspValue }} />
+				{placeholder}
 			</div>
 		);
 		
