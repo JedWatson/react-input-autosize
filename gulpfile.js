@@ -13,7 +13,6 @@ var browserify = require('browserify'),
 	uglify = require('gulp-uglify'),
 	gutil = require('gulp-util'),
 	merge = require('merge-stream'),
-	reactify = require('reactify'),
 	to5ify = require('6to5ify'),
 	to5 = require('gulp-6to5'),
 	source = require('vinyl-source-stream'),
@@ -242,7 +241,7 @@ gulp.task('build:dist', ['prepare:dist', 'build:lib'], function() {
 	var standalone = browserify('./' + LIB_PATH + '/' + PACKAGE_FILE, {
 			standalone: COMPONENT_NAME
 		})
-		.transform(reactify)
+		.transform(to5ify)
 		.transform(shim);
 	
 	DEPENDENCIES.forEach(function(pkg) {
