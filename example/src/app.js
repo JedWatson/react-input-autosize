@@ -5,7 +5,8 @@ var App = React.createClass({
 	getInitialState: function() {
 		return {
 			value1: '',
-			value2: 'example'
+			value2: 'example',
+			value3: ''
 		};
 	},
 	updateInputValue: function(input, event) {
@@ -25,6 +26,14 @@ var App = React.createClass({
 				<AutosizeInput
 					value={this.state.value2}
 					onChange={this.updateInputValue.bind(this, 'value2')}
+					style={{ background: '#eee', borderRadius: 5, padding: 5 }}
+					inputStyle={{ border: '1px solid #999', borderRadius: 3, padding: 3, fontSize: 14 }}
+				/>
+				<h3>Input with placeholder:</h3>
+				<AutosizeInput
+					
+					value={this.state.value3}
+					onChange={this.updateInputValue.bind(this, 'value3')}
 					style={{ background: '#eee', borderRadius: 5, padding: 5 }}
 					inputStyle={{ border: '1px solid #999', borderRadius: 3, padding: 3, fontSize: 14 }}
 				/>
