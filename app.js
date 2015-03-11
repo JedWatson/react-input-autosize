@@ -5,44 +5,58 @@ var React = require("react"),
     AutosizeInput = require("react-input-autosize");
 
 var App = React.createClass({
-  displayName: "App",
-  getInitialState: function () {
-    return {
-      value1: "",
-      value2: "example"
-    };
-  },
-  updateInputValue: function (input, event) {
-    var newState = {};
-    newState[input] = event.target.value;
-    this.setState(newState);
-  },
-  render: function () {
-    return React.createElement(
-      "div",
-      null,
-      React.createElement(
-        "h3",
-        null,
-        "Simple example:"
-      ),
-      React.createElement(AutosizeInput, {
-        value: this.state.value1,
-        onChange: this.updateInputValue.bind(this, "value1")
-      }),
-      React.createElement(
-        "h3",
-        null,
-        "Styled example with default value:"
-      ),
-      React.createElement(AutosizeInput, {
-        value: this.state.value2,
-        onChange: this.updateInputValue.bind(this, "value2"),
-        style: { background: "#eee", borderRadius: 5, padding: 5 },
-        inputStyle: { border: "1px solid #999", borderRadius: 3, padding: 3, fontSize: 14 }
-      })
-    );
-  }
+	displayName: "App",
+
+	getInitialState: function getInitialState() {
+		return {
+			value1: "",
+			value2: "example",
+			value3: ""
+		};
+	},
+	updateInputValue: function updateInputValue(input, event) {
+		var newState = {};
+		newState[input] = event.target.value;
+		this.setState(newState);
+	},
+	render: function render() {
+		return React.createElement(
+			"div",
+			null,
+			React.createElement(
+				"h3",
+				null,
+				"Simple example:"
+			),
+			React.createElement(AutosizeInput, {
+				value: this.state.value1,
+				onChange: this.updateInputValue.bind(this, "value1")
+			}),
+			React.createElement(
+				"h3",
+				null,
+				"Styled example with default value:"
+			),
+			React.createElement(AutosizeInput, {
+				value: this.state.value2,
+				onChange: this.updateInputValue.bind(this, "value2"),
+				style: { background: "#eee", borderRadius: 5, padding: 5 },
+				inputStyle: { border: "1px solid #999", borderRadius: 3, padding: 3, fontSize: 14 }
+			}),
+			React.createElement(
+				"h3",
+				null,
+				"Input with placeholder:"
+			),
+			React.createElement(AutosizeInput, {
+
+				value: this.state.value3,
+				onChange: this.updateInputValue.bind(this, "value3"),
+				style: { background: "#eee", borderRadius: 5, padding: 5 },
+				inputStyle: { border: "1px solid #999", borderRadius: 3, padding: 3, fontSize: 14 }
+			})
+		);
+	}
 });
 
 React.render(React.createElement(App, null), document.getElementById("app"));
