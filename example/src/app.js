@@ -38,7 +38,7 @@ var App = React.createClass({
 					inputStyle={{ border: '1px solid #999', borderRadius: 3, padding: 3, fontSize: 14 }}
 				/>
 			</div>
-		)
+		);
 	}
 });
 
