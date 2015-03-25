@@ -17,6 +17,7 @@ var AutosizeInput = React.createClass({
 		onChange: React.PropTypes.func, // onChange handler: function(newValue) {}
 		style: React.PropTypes.object, // css styles for the outer element
 		className: React.PropTypes.string, // className for the outer element
+		minWidth: React.PropTypes.number, // minimum width for input element
 		inputStyle: React.PropTypes.object, // css styles for the input element
 		inputClassName: React.PropTypes.string // className for the input element
 	},
@@ -58,7 +59,7 @@ var AutosizeInput = React.createClass({
 	},
 
 	updateInputWidth: function updateInputWidth() {
-		if (!this.isMounted()) {
+		if (!this.isMounted() || typeof this.refs.sizer.getDOMNode().scrollWidth === "undefined") {
 			return;
 		}
 		var newInputWidth;

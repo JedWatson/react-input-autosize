@@ -18,7 +18,7 @@
     "eslint": "^0.17.1",
     "gulp": "^3.8.11",
     "jest-cli": "^0.4.0",
-    "react-component-gulp-tasks": "^0.4.1"
+    "react-component-gulp-tasks": "^0.4.3"
   },
   "browserify-shim": {
     "react": "global:React"
