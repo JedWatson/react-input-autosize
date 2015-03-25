@@ -49,7 +49,7 @@ var App = React.createClass({
 				"Input with placeholder:"
 			),
 			React.createElement(AutosizeInput, {
-
+				placeholder: "Placeholder",
 				value: this.state.value3,
 				onChange: this.updateInputValue.bind(this, "value3"),
 				style: { background: "#eee", borderRadius: 5, padding: 5 },

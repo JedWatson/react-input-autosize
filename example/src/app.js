@@ -31,7 +31,7 @@ var App = React.createClass({
 				/>
 				<h3>Input with placeholder:</h3>
 				<AutosizeInput
-					
+					placeholder="Placeholder"
 					value={this.state.value3}
 					onChange={this.updateInputValue.bind(this, 'value3')}
 					style={{ background: '#eee', borderRadius: 5, padding: 5 }}
