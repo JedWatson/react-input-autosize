@@ -15,12 +15,12 @@ describe('AutosizeInput test', function() {
 
 	// Render an instance of the component
 	var instance = TestUtils.renderIntoDocument(
-		<AutosizeInput onChange={logChange} value="test" className="testClass" />
+		<AutosizeInput onChange={logChange} value="test" inputClassName="testClass" />
 	);
 
 	var inputElement = TestUtils.findRenderedDOMComponentWithTag(instance, 'input');
 
-	it('should assign the given className', function() {
+	it('should assign the given inputClassName', function() {
 		expect(inputElement.getDOMNode().className).toEqual('testClass');
 	});
 
