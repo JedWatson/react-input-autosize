@@ -13,14 +13,21 @@
     "react": ">=0.12.0"
   },
   "devDependencies": {
+    "babel-jest": "^4.0.0",
     "gulp": "^3.8.11",
+    "jest-cli": "^0.4.0",
     "react-component-gulp-tasks": "^0.4.1"
   },
   "browserify-shim": {
     "react": "global:React"
   },
   "scripts": {
-    "test": "echo \"no tests yet\" && exit 0"
+    "test": "jest; true"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
+    "testPathDirs": ["<rootDir>/src"]
   },
   "keywords": [
     "react",
