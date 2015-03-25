@@ -13,7 +13,9 @@
     "react": ">=0.12.0"
   },
   "devDependencies": {
+    "babel-eslint": "^2.0.2",
     "babel-jest": "^4.0.0",
+    "eslint": "^0.17.1",
     "gulp": "^3.8.11",
     "jest-cli": "^0.4.0",
     "react-component-gulp-tasks": "^0.4.1"
@@ -22,12 +24,17 @@
     "react": "global:React"
   },
   "scripts": {
-    "test": "jest; true"
+    "test": "jest; true",
+    "lint": "eslint ./; true"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
-    "testPathDirs": ["<rootDir>/src"]
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ],
+    "testPathDirs": [
+      "<rootDir>/src"
+    ]
   },
   "keywords": [
     "react",
