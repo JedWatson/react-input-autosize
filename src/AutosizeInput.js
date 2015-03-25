@@ -12,7 +12,10 @@ var AutosizeInput = React.createClass({
 		onChange: React.PropTypes.func,             // onChange handler: function(newValue) {}
 		style: React.PropTypes.object,              // css styles for the outer element
 		className: React.PropTypes.string,          // className for the outer element
-		minWidth: React.PropTypes.number,           // minimum width for input element
+		minWidth: React.PropTypes.oneOfType([       // minimum width for input element
+			React.PropTypes.number,
+			React.PropTypes.string
+		]),
 		inputStyle: React.PropTypes.object,         // css styles for the input element
 		inputClassName: React.PropTypes.string      // className for the input element
 	},
