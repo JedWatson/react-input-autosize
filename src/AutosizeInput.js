@@ -47,9 +47,9 @@ var AutosizeInput = React.createClass({
 		widthNode.style.fontSize = inputStyle.fontSize;
 		widthNode.style.fontFamily = inputStyle.fontFamily;
 		if (this.props.placeholder) {
-			widthNode = this.refs.placeholderSizer.getDOMNode();
-			widthNode.style.fontSize = inputStyle.fontSize;
-			widthNode.style.fontFamily = inputStyle.fontFamily;
+			var placeholderNode = this.refs.placeholderSizer.getDOMNode();
+			placeholderNode.style.fontSize = inputStyle.fontSize;
+			placeholderNode.style.fontFamily = inputStyle.fontFamily;
 		}
 	},
 	
@@ -95,7 +95,7 @@ var AutosizeInput = React.createClass({
 		var inputStyle = this.props.inputStyle || {};
 		inputStyle.width = this.state.inputWidth;
 		
-		var placeholder = this.props.placeholder ? <div ref="placeholderSizer" styl={sizerStyle}>{this.props.placeholder}</div> : null;
+		var placeholder = this.props.placeholder ? <div ref="placeholderSizer" style={sizerStyle}>{this.props.placeholder}</div> : null;
 		
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
