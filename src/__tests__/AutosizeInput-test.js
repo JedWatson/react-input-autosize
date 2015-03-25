@@ -9,11 +9,6 @@ var TestUtils = React.addons.TestUtils;
 
 describe('AutosizeInput test', function() {
 
-	var options = [
-		{ value: 'one', label: 'One' },
-		{ value: 'two', label: 'Two' }
-	];
-
 	function logChange(val) {
 		console.log('Selected: ' + val);
 	}
@@ -26,7 +21,7 @@ describe('AutosizeInput test', function() {
 	var inputElement = TestUtils.findRenderedDOMComponentWithTag(instance, 'input');
 
 	it('should assign the given className', function() {
-		expect(selectInputElement.getDOMNode().className).toEqual('testClass');
+		expect(inputElement.getDOMNode().className).toEqual('testClass');
 	});
 
 });
