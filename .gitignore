@@ -13,3 +13,6 @@ coverage
 
 # Dependency directory
 node_modules
+
+# Build
+.publish
