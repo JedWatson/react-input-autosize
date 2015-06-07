@@ -3,9 +3,6 @@ var React = require('react');
 var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
 
 var AutosizeInput = React.createClass({
-	
-	displayName: 'AutosizeInput',
-
 	propTypes: {
 		value: React.PropTypes.any,                 // field value
 		defaultValue: React.PropTypes.any,          // default field value
@@ -19,29 +16,24 @@ var AutosizeInput = React.createClass({
 		inputStyle: React.PropTypes.object,         // css styles for the input element
 		inputClassName: React.PropTypes.string      // className for the input element
 	},
-	
-	getDefaultProps: function() {
+	getDefaultProps () {
 		return {
 			minWidth: 1
 		};
 	},
-	
-	getInitialState: function() {
+	getInitialState () {
 		return {
 			inputWidth: this.props.minWidth
 		};
 	},
-	
-	componentDidMount: function() {
+	componentDidMount () {
 		this.copyInputStyles();
 		this.updateInputWidth();
 	},
-	
-	componentDidUpdate: function() {
+	componentDidUpdate () {
 		this.updateInputWidth();
 	},
-	
-	copyInputStyles: function() {
+	copyInputStyles () {
 		if (!this.isMounted() || !window.getComputedStyle) {
 			return;
 		}
@@ -55,8 +47,7 @@ var AutosizeInput = React.createClass({
 			placeholderNode.style.fontFamily = inputStyle.fontFamily;
 		}
 	},
-	
-	updateInputWidth: function() {
+	updateInputWidth () {
 		if (!this.isMounted() || typeof this.refs.sizer.getDOMNode().scrollWidth === 'undefined') {
 			return;
 		}
@@ -75,20 +66,16 @@ var AutosizeInput = React.createClass({
 			});
 		}
 	},
-	
-	getInput: function() {
+	getInput () {
 		return this.refs.input;
 	},
-	
-	focus: function() {
+	focus () {
 		this.refs.input.getDOMNode().focus();
 	},
-	
-	select: function() {
+	select () {
 		this.refs.input.getDOMNode().select();
 	},
-	
-	render: function() {
+	render () {
 		var escapedValue = (this.props.value || '').replace(/ /g, '&nbsp;').replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
 		var wrapperStyle = this.props.style || {};
 		wrapperStyle.display = 'inline-block';
