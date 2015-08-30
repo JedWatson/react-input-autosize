@@ -79,7 +79,7 @@ var AutosizeInput = React.createClass({
 		var escapedValue = (this.props.value || '').replace(/\&/g, '&amp;').replace(/ /g, '&nbsp;').replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
 		var wrapperStyle = this.props.style || {};
 		wrapperStyle.display = 'inline-block';
-		var inputStyle = this.props.inputStyle || {};
+		var inputStyle = Object.assign({}, this.props.inputStyle);
 		inputStyle.width = this.state.inputWidth;
 		inputStyle.boxSizing = 'content-box';
 		var placeholder = this.props.placeholder ? <div ref="placeholderSizer" style={sizerStyle}>{this.props.placeholder}</div> : null;
