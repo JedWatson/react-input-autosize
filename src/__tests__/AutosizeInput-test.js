@@ -3,9 +3,9 @@
 
 jest.dontMock('../AutosizeInput');
 
-var React = require('react/addons');
+var React = require('react');
 var AutosizeInput = require('../AutosizeInput');
-var TestUtils = React.addons.TestUtils;
+var TestUtils = require('react-addons-test-utils');
 
 describe('AutosizeInput test', function() {
 
