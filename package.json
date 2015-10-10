@@ -17,10 +17,13 @@
     "gulp": "^3.9.0",
     "jest-cli": "^0.5.10",
     "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-addons-test-utils": "^0.14.0",
     "react-component-gulp-tasks": "^0.7.6"
   },
   "peerDependencies": {
-    "react": "^0.14.0"
+    "react": "^0.14.0",
+		"react-dom": "^0.14.0"
   },
   "browserify-shim": {
     "react": "global:React"
@@ -52,8 +55,5 @@
     "react-component",
     "input",
     "autosize"
-  ],
-  "dependencies": {
-    "react-dom": "^0.14.0"
-  }
+  ]
 }
