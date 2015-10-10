@@ -35,8 +35,8 @@
     "bump:minor": "gulp bump:minor",
     "examples": "gulp dev:server",
     "lint": "eslint ./; true",
-    "publish:site": "gulp publish:examples",
-    "release": "gulp release",
+    "publish:site": "NODE_ENV=production gulp publish:examples",
+    "release": "NODE_ENV=production gulp release",
     "start": "gulp dev",
     "test": "jest; true",
     "watch": "gulp watch:lib"
