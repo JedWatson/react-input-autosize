@@ -50,23 +50,25 @@ var AutosizeInput = React.createClass({
 		}
 	},
 	updateInputWidth () {
-		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
-			return;
-		}
-		var newInputWidth;
-		if (this.props.placeholder) {
-			newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
-		} else {
-			newInputWidth = this.refs.sizer.scrollWidth + 2;
-		}
-		if (newInputWidth < this.props.minWidth) {
-			newInputWidth = this.props.minWidth;
-		}
-		if (newInputWidth !== this.state.inputWidth) {
-			this.setState({
-				inputWidth: newInputWidth
-			});
-		}
+		requestAnimationFrame(() => {
+			if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
+				return;
+			}
+			var newInputWidth;
+			if (this.props.placeholder) {
+				newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
+			} else {
+				newInputWidth = this.refs.sizer.scrollWidth + 2;
+			}
+			if (newInputWidth < this.props.minWidth) {
+				newInputWidth = this.props.minWidth;
+			}
+			if (newInputWidth !== this.state.inputWidth) {
+				this.setState({
+					inputWidth: newInputWidth
+				});
+			}
+		});
 	},
 	getInput () {
 		return this.refs.input;
