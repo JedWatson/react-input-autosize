@@ -8,6 +8,12 @@ var React = (typeof window !== "undefined" ? window['React'] : typeof global !==
 
 var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
 
+var nextFrame = (function () {
+	return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
+		window.setTimeout(callback, 1000 / 60);
+	};
+})();
+
 var AutosizeInput = React.createClass({
 	displayName: 'AutosizeInput',
 
@@ -37,7 +43,7 @@ var AutosizeInput = React.createClass({
 		this.updateInputWidth();
 	},
 	componentDidUpdate: function componentDidUpdate() {
-		this.updateInputWidth();
+		this.queueUpdateInputWidth();
 	},
 	copyInputStyles: function copyInputStyles() {
 		if (!this.isMounted() || !window.getComputedStyle) {
@@ -55,11 +61,14 @@ var AutosizeInput = React.createClass({
 			placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
 		}
 	},
+	queueUpdateInputWidth: function queueUpdateInputWidth() {
+		nextFrame(this.updateInputWidth);
+	},
 	updateInputWidth: function updateInputWidth() {
 		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
 			return;
 		}
-		var newInputWidth;
+		var newInputWidth = undefined;
 		if (this.props.placeholder) {
 			newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
 		} else {
