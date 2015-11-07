@@ -2,7 +2,16 @@ const React = require('react');
 
 const sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
 
-var AutosizeInput = React.createClass({
+const nextFrame = (function(){
+	return window.requestAnimationFrame
+		|| window.webkitRequestAnimationFrame
+		|| window.mozRequestAnimationFrame
+		|| function (callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+})();
+
+const AutosizeInput = React.createClass({
 	propTypes: {
 		value: React.PropTypes.any,                 // field value
 		defaultValue: React.PropTypes.any,          // default field value
@@ -31,7 +40,7 @@ var AutosizeInput = React.createClass({
 		this.updateInputWidth();
 	},
 	componentDidUpdate () {
-		this.updateInputWidth();
+		this.queueUpdateInputWidth();
 	},
 	copyInputStyles () {
 		if (!this.isMounted() || !window.getComputedStyle) {
@@ -49,26 +58,27 @@ var AutosizeInput = React.createClass({
 			placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
 		}
 	},
+	queueUpdateInputWidth () {
+		nextFrame(this.updateInputWidth);
+	},
 	updateInputWidth () {
-		requestAnimationFrame(() => {
-			if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
-				return;
-			}
-			var newInputWidth;
-			if (this.props.placeholder) {
-				newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
-			} else {
-				newInputWidth = this.refs.sizer.scrollWidth + 2;
-			}
-			if (newInputWidth < this.props.minWidth) {
-				newInputWidth = this.props.minWidth;
-			}
-			if (newInputWidth !== this.state.inputWidth) {
-				this.setState({
-					inputWidth: newInputWidth
-				});
-			}
-		});
+		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
+			return;
+		}
+		let newInputWidth;
+		if (this.props.placeholder) {
+			newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
+		} else {
+			newInputWidth = this.refs.sizer.scrollWidth + 2;
+		}
+		if (newInputWidth < this.props.minWidth) {
+			newInputWidth = this.props.minWidth;
+		}
+		if (newInputWidth !== this.state.inputWidth) {
+			this.setState({
+				inputWidth: newInputWidth
+			});
+		}
 	},
 	getInput () {
 		return this.refs.input;
