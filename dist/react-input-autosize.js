@@ -8,11 +8,11 @@ var React = (typeof window !== "undefined" ? window['React'] : typeof global !==
 
 var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
 
-var nextFrame = (function () {
+var nextFrame = typeof window !== 'undefined' ? (function () {
 	return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
 		window.setTimeout(callback, 1000 / 60);
 	};
-})();
+})() : undefined; // If window is undefined, then we can't define a nextFrame function
 
 var AutosizeInput = React.createClass({
 	displayName: 'AutosizeInput',
