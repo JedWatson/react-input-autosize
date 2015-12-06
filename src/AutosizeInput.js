@@ -9,7 +9,7 @@ const nextFrame = typeof window !== 'undefined' ? (function(){
 		|| function (callback) {
 			window.setTimeout(callback, 1000 / 60);
 		};
-})() : undefined; // If window is undefined, then we can't define a nextFrame function
+})().bind(window) : undefined; // If window is undefined, then we can't define a nextFrame function
 
 const AutosizeInput = React.createClass({
 	propTypes: {
