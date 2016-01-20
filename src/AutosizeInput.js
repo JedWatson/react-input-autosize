@@ -90,6 +90,9 @@ const AutosizeInput = React.createClass({
 	focus () {
 		this.refs.input.focus();
 	},
+	blur () {
+		this.refs.input.blur();
+	},
 	select () {
 		this.refs.input.select();
 	},
