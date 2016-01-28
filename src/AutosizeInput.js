@@ -1,6 +1,6 @@
 const React = require('react');
 
-const sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
+const sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'pre' };
 
 const nextFrame = typeof window !== 'undefined' ? (function(){
 	return window.requestAnimationFrame
@@ -97,7 +97,7 @@ const AutosizeInput = React.createClass({
 		this.refs.input.select();
 	},
 	render () {
-		const escapedValue = (this.props.defaultValue || this.props.value || '').replace(/\&/g, '&amp;').replace(/ /g, '&nbsp;').replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
+		const sizerValue = (this.props.defaultValue || this.props.value || '');
 		const wrapperStyle = this.props.style || {};
 		if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
 		const inputStyle = Object.assign({}, this.props.inputStyle);
@@ -107,7 +107,7 @@ const AutosizeInput = React.createClass({
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				<input {...this.props} ref="input" className={this.props.inputClassName} style={inputStyle} />
-				<div ref="sizer" style={sizerStyle} dangerouslySetInnerHTML={{ __html: escapedValue }} />
+				<div ref="sizer" style={sizerStyle}>{sizerValue}</div>
 				{placeholder}
 			</div>
 		);
