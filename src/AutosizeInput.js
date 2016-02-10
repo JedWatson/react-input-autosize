@@ -1,8 +1,17 @@
-var React = require('react');
+const React = require('react');
 
-var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
+const sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
 
-var AutosizeInput = React.createClass({
+const nextFrame = typeof window !== 'undefined' ? (function(){
+	return window.requestAnimationFrame
+		|| window.webkitRequestAnimationFrame
+		|| window.mozRequestAnimationFrame
+		|| function (callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+})().bind(window) : undefined; // If window is undefined, then we can't define a nextFrame function
+
+const AutosizeInput = React.createClass({
 	propTypes: {
 		value: React.PropTypes.any,                 // field value
 		defaultValue: React.PropTypes.any,          // default field value
@@ -31,29 +40,36 @@ var AutosizeInput = React.createClass({
 		this.updateInputWidth();
 	},
 	componentDidUpdate () {
-		this.updateInputWidth();
+		this.queueUpdateInputWidth();
 	},
 	copyInputStyles () {
 		if (!this.isMounted() || !window.getComputedStyle) {
 			return;
 		}
-		var inputStyle = window.getComputedStyle(this.refs.input);
-		var widthNode = this.refs.sizer;
+		const inputStyle = window.getComputedStyle(this.refs.input);
+		const widthNode = this.refs.sizer;
 		widthNode.style.fontSize = inputStyle.fontSize;
 		widthNode.style.fontFamily = inputStyle.fontFamily;
+		widthNode.style.fontWeight = inputStyle.fontWeight;
+		widthNode.style.fontStyle = inputStyle.fontStyle;
 		widthNode.style.letterSpacing = inputStyle.letterSpacing;
 		if (this.props.placeholder) {
-			var placeholderNode = this.refs.placeholderSizer;
+			const placeholderNode = this.refs.placeholderSizer;
 			placeholderNode.style.fontSize = inputStyle.fontSize;
 			placeholderNode.style.fontFamily = inputStyle.fontFamily;
+			placeholderNode.style.fontWeight = inputStyle.fontWeight;
+			placeholderNode.style.fontStyle = inputStyle.fontStyle;
 			placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
 		}
+	},
+	queueUpdateInputWidth () {
+		nextFrame(this.updateInputWidth);
 	},
 	updateInputWidth () {
 		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
 			return;
 		}
-		var newInputWidth;
+		let newInputWidth;
 		if (this.props.placeholder) {
 			newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
 		} else {
@@ -74,17 +90,20 @@ var AutosizeInput = React.createClass({
 	focus () {
 		this.refs.input.focus();
 	},
+	blur () {
+		this.refs.input.blur();
+	},
 	select () {
 		this.refs.input.select();
 	},
 	render () {
-		var escapedValue = (this.props.value || '').replace(/\&/g, '&amp;').replace(/ /g, '&nbsp;').replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
-		var wrapperStyle = this.props.style || {};
+		const escapedValue = (this.props.defaultValue || this.props.value || '').replace(/\&/g, '&amp;').replace(/ /g, '&nbsp;').replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
+		const wrapperStyle = this.props.style || {};
 		if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
-		var inputStyle = Object.assign({}, this.props.inputStyle);
+		const inputStyle = Object.assign({}, this.props.inputStyle);
 		inputStyle.width = this.state.inputWidth;
 		inputStyle.boxSizing = 'content-box';
-		var placeholder = this.props.placeholder ? <div ref="placeholderSizer" style={sizerStyle}>{this.props.placeholder}</div> : null;
+		const placeholder = this.props.placeholder ? <div ref="placeholderSizer" style={sizerStyle}>{this.props.placeholder}</div> : null;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				<input {...this.props} ref="input" className={this.props.inputClassName} style={inputStyle} />

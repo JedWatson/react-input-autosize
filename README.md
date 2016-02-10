@@ -40,7 +40,7 @@ npm install react-input-autosize --save
 React-Input-Autosize generates an input field, wrapped in a `<div>` tag so it can detect the size of its value. Otherwise it behaves very similarly to a standard React input.
 
 
-```
+```es6
 var AutosizeInput = require('react-input-autosize');
 
 <AutosizeInput
