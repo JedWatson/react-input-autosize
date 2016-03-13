@@ -101,7 +101,7 @@ const AutosizeInput = React.createClass({
 		const wrapperStyle = this.props.style || {};
 		if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
 		const inputStyle = Object.assign({}, this.props.inputStyle);
-		inputStyle.width = this.state.inputWidth;
+		inputStyle.width = this.state.inputWidth + 'px';
 		inputStyle.boxSizing = 'content-box';
 		const placeholder = this.props.placeholder ? <div ref="placeholderSizer" style={sizerStyle}>{this.props.placeholder}</div> : null;
 		return (
