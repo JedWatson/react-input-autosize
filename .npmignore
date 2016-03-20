@@ -1,0 +1,7 @@
+example/
+src/
+bower.json
+.editorconfig
+.eslintignore
+.eslintrc
+gulpfile.js
