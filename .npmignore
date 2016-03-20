@@ -1,7 +1,7 @@
-example/
-src/
+.publish
+*.log
 bower.json
-.editorconfig
-.eslintignore
-.eslintrc
+example/dist
 gulpfile.js
+logs
+src/__tests__
