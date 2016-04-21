@@ -49,6 +49,9 @@ var AutosizeInput = React.createClass({
 			return;
 		}
 		var inputStyle = window.getComputedStyle(this.refs.input);
+		if (!inputStyle) {
+			return;
+		}
 		var widthNode = this.refs.sizer;
 		widthNode.style.fontSize = inputStyle.fontSize;
 		widthNode.style.fontFamily = inputStyle.fontFamily;
