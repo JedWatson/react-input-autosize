@@ -40,7 +40,7 @@ const AutosizeInput = React.createClass({
 		this.updateInputWidth();
 	},
 	componentDidUpdate () {
-		this.queueUpdateInputWidth();
+		this.updateInputWidth();
 	},
 	copyInputStyles () {
 		if (!this.isMounted() || !window.getComputedStyle) {
@@ -64,9 +64,6 @@ const AutosizeInput = React.createClass({
 			placeholderNode.style.fontStyle = inputStyle.fontStyle;
 			placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
 		}
-	},
-	queueUpdateInputWidth () {
-		nextFrame(this.updateInputWidth);
 	},
 	updateInputWidth () {
 		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
