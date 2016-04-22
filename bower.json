@@ -1,7 +1,7 @@
 {
   "name": "react-input-autosize",
   "main": "dist/react-input-autosize.js",
-  "version": "0.6.10",
+  "version": "0.6.13",
   "homepage": "https://github.com/JedWatson/react-input-autosize",
   "authors": [
     "Jed Watson"
