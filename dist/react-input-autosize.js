@@ -6,7 +6,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
-var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'pre' };
+var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, overflow: 'scroll', whiteSpace: 'pre' };
 
 var nextFrame = typeof window !== 'undefined' ? (function () {
 	return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {

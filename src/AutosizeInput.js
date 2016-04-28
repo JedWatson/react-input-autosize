@@ -1,6 +1,6 @@
 const React = require('react');
 
-const sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'pre' };
+const sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, overflow: 'scroll', whiteSpace: 'pre' };
 
 const nextFrame = typeof window !== 'undefined' ? (function(){
 	return window.requestAnimationFrame
