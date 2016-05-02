@@ -70,7 +70,7 @@ const AutosizeInput = React.createClass({
 			return;
 		}
 		let newInputWidth;
-		if (this.props.placeholder) {
+		if (this.props.placeholder && !this.props.value) {
 			newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
 		} else {
 			newInputWidth = this.refs.sizer.scrollWidth + 2;
