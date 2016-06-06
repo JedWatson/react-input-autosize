@@ -19,7 +19,7 @@ const AutosizeInput = React.createClass({
 		inputClassName: React.PropTypes.string,     // className for the input element
 		minWidth: React.PropTypes.oneOfType([       // minimum width for input element
 			React.PropTypes.number,
-			React.PropTypes.string
+			React.PropTypes.string,
 		]),
 		onChange: React.PropTypes.func,             // onChange handler: function(newValue) {}
 		style: React.PropTypes.object,              // css styles for the outer element
@@ -27,12 +27,12 @@ const AutosizeInput = React.createClass({
 	},
 	getDefaultProps () {
 		return {
-			minWidth: 1
+			minWidth: 1,
 		};
 	},
 	getInitialState () {
 		return {
-			inputWidth: this.props.minWidth
+			inputWidth: this.props.minWidth,
 		};
 	},
 	componentDidMount () {
@@ -111,7 +111,7 @@ const AutosizeInput = React.createClass({
 				{placeholder}
 			</div>
 		);
-	}
+	},
 });
 
 module.exports = AutosizeInput;
