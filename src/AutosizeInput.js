@@ -13,17 +13,17 @@ const nextFrame = typeof window !== 'undefined' ? (function(){
 
 const AutosizeInput = React.createClass({
 	propTypes: {
-		value: React.PropTypes.any,                 // field value
-		defaultValue: React.PropTypes.any,          // default field value
-		onChange: React.PropTypes.func,             // onChange handler: function(newValue) {}
-		style: React.PropTypes.object,              // css styles for the outer element
 		className: React.PropTypes.string,          // className for the outer element
+		defaultValue: React.PropTypes.any,          // default field value
+		inputStyle: React.PropTypes.object,         // css styles for the input element
+		inputClassName: React.PropTypes.string,     // className for the input element
 		minWidth: React.PropTypes.oneOfType([       // minimum width for input element
 			React.PropTypes.number,
 			React.PropTypes.string
 		]),
-		inputStyle: React.PropTypes.object,         // css styles for the input element
-		inputClassName: React.PropTypes.string      // className for the input element
+		onChange: React.PropTypes.func,             // onChange handler: function(newValue) {}
+		style: React.PropTypes.object,              // css styles for the outer element
+		value: React.PropTypes.any,                 // field value
 	},
 	getDefaultProps () {
 		return {
