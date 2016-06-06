@@ -3,19 +3,19 @@ var ReactDOM = require('react-dom');
 var AutosizeInput = require('react-input-autosize');
 
 var App = React.createClass({
-	getInitialState: function() {
+	getInitialState () {
 		return {
 			value1: '',
 			value2: 'example',
-			value3: ''
+			value3: '',
 		};
 	},
-	updateInputValue: function(input, event) {
+	updateInputValue (input, event) {
 		var newState = {};
 		newState[input] = event.target.value;
 		this.setState(newState);
 	},
-	render: function() {
+	render () {
 		return (
 			<div>
 				<h3>Simple example:</h3>
@@ -40,7 +40,7 @@ var App = React.createClass({
 				/>
 			</div>
 		);
-	}
+	},
 });
 
 ReactDOM.render(<App />, document.getElementById('app'));

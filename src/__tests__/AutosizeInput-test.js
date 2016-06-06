@@ -1,5 +1,5 @@
 'use strict';
-/*global describe, it, jest, expect*/
+/* global describe, it, jest, expect */
 
 jest.dontMock('../AutosizeInput');
 
@@ -7,9 +7,9 @@ var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 var AutosizeInput = require('../AutosizeInput');
 
-describe('AutosizeInput test', function() {
+describe('AutosizeInput test', function () {
 
-	function logChange(val) {
+	function logChange (val) {
 		console.log('Selected: ' + val);
 	}
 
@@ -20,7 +20,7 @@ describe('AutosizeInput test', function() {
 
 	var inputElement = TestUtils.findRenderedDOMComponentWithTag(instance, 'input');
 
-	it('should assign the given inputClassName', function() {
+	it('should assign the given inputClassName', function () {
 		expect(inputElement.className).toEqual('testClass');
 	});
 
