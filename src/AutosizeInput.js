@@ -2,15 +2,6 @@ const React = require('react');
 
 const sizerStyle = { position: 'absolute', top: 0, left: 0, visibility: 'hidden', height: 0, overflow: 'scroll', whiteSpace: 'pre' };
 
-const nextFrame = typeof window !== 'undefined' ? (function(){
-	return window.requestAnimationFrame
-		|| window.webkitRequestAnimationFrame
-		|| window.mozRequestAnimationFrame
-		|| function (callback) {
-			window.setTimeout(callback, 1000 / 60);
-		};
-})().bind(window) : undefined; // If window is undefined, then we can't define a nextFrame function
-
 const AutosizeInput = React.createClass({
 	propTypes: {
 		className: React.PropTypes.string,          // className for the outer element
