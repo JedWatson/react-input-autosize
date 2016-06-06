@@ -6,28 +6,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
-var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'pre' };
-
-var nextFrame = typeof window !== 'undefined' ? (function () {
-	return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
-		window.setTimeout(callback, 1000 / 60);
-	};
-})().bind(window) : undefined; // If window is undefined, then we can't define a nextFrame function
+var sizerStyle = { position: 'absolute', top: 0, left: 0, visibility: 'hidden', height: 0, overflow: 'scroll', whiteSpace: 'pre' };
 
 var AutosizeInput = React.createClass({
 	displayName: 'AutosizeInput',
 
 	propTypes: {
-		value: React.PropTypes.any, // field value
-		defaultValue: React.PropTypes.any, // default field value
-		onChange: React.PropTypes.func, // onChange handler: function(newValue) {}
-		style: React.PropTypes.object, // css styles for the outer element
 		className: React.PropTypes.string, // className for the outer element
+		defaultValue: React.PropTypes.any, // default field value
+		inputClassName: React.PropTypes.string, // className for the input element
+		inputStyle: React.PropTypes.object, // css styles for the input element
 		minWidth: React.PropTypes.oneOfType([// minimum width for input element
 		React.PropTypes.number, React.PropTypes.string]),
-		inputStyle: React.PropTypes.object, // css styles for the input element
-		inputClassName: React.PropTypes.string // className for the input element
-	},
+		onChange: React.PropTypes.func, // onChange handler: function(newValue) {}
+		placeholder: React.PropTypes.string, // placeholder text
+		placeholderIsMinWidth: React.PropTypes.string, // don't collapse size to less than the placeholder
+		style: React.PropTypes.object, // css styles for the outer element
+		value: React.PropTypes.any },
+	// field value
 	getDefaultProps: function getDefaultProps() {
 		return {
 			minWidth: 1
@@ -73,7 +69,7 @@ var AutosizeInput = React.createClass({
 			return;
 		}
 		var newInputWidth = undefined;
-		if (this.props.placeholder && !this.props.value) {
+		if (this.props.placeholder && (!this.props.value || this.props.value && this.props.placeholderIsMinWidth)) {
 			newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
 		} else {
 			newInputWidth = this.refs.sizer.scrollWidth + 2;
