@@ -4,18 +4,19 @@ const sizerStyle = { position: 'absolute', top: 0, left: 0, visibility: 'hidden'
 
 const AutosizeInput = React.createClass({
 	propTypes: {
-		className: React.PropTypes.string,          // className for the outer element
-		defaultValue: React.PropTypes.any,          // default field value
-		inputClassName: React.PropTypes.string,     // className for the input element
-		inputStyle: React.PropTypes.object,         // css styles for the input element
-		minWidth: React.PropTypes.oneOfType([       // minimum width for input element
+		className: React.PropTypes.string,               // className for the outer element
+		defaultValue: React.PropTypes.any,               // default field value
+		inputClassName: React.PropTypes.string,          // className for the input element
+		inputStyle: React.PropTypes.object,              // css styles for the input element
+		minWidth: React.PropTypes.oneOfType([            // minimum width for input element
 			React.PropTypes.number,
 			React.PropTypes.string,
 		]),
-		onChange: React.PropTypes.func,             // onChange handler: function(newValue) {}
-		placeholder: React.PropTypes.string,        // placeholder text
-		style: React.PropTypes.object,              // css styles for the outer element
-		value: React.PropTypes.any,                 // field value
+		onChange: React.PropTypes.func,                  // onChange handler: function(newValue) {}
+		placeholder: React.PropTypes.string,             // placeholder text
+		placeholderIsMinWidth: React.PropTypes.string,   // don't collapse size to less than the placeholder
+		style: React.PropTypes.object,                   // css styles for the outer element
+		value: React.PropTypes.any,                      // field value
 	},
 	getDefaultProps () {
 		return {
@@ -62,7 +63,7 @@ const AutosizeInput = React.createClass({
 			return;
 		}
 		let newInputWidth;
-		if (this.props.placeholder && !this.props.value) {
+		if (this.props.placeholder && (!this.props.value || (this.props.value && this.props.placeholderIsMinWidth))) {
 			newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
 		} else {
 			newInputWidth = this.refs.sizer.scrollWidth + 2;
