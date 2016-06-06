@@ -10,6 +10,7 @@
     "url": "https://github.com/JedWatson/react-input-autosize.git"
   },
   "devDependencies": {
+    "babel-jest": "^6.0.1",
     "eslint": "^2.11.1",
     "eslint-config-keystone": "^2.2.0",
     "eslint-plugin-react": "^5.1.1",
