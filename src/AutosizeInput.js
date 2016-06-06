@@ -13,6 +13,7 @@ const AutosizeInput = React.createClass({
 			React.PropTypes.string,
 		]),
 		onChange: React.PropTypes.func,             // onChange handler: function(newValue) {}
+		placeholder: React.PropTypes.string,        // placeholder text
 		style: React.PropTypes.object,              // css styles for the outer element
 		value: React.PropTypes.any,                 // field value
 	},
