@@ -11,31 +11,24 @@ var App = React.createClass({
 			value4: '',
 		};
 	},
-	updateInputValue (input, event) {
-		var newState = {};
-		newState[input] = event.target.value;
-		this.setState(newState);
+	updateInputValue (newValue, oldValue) {
+		console.log(newValue, oldValue);
 	},
 	render () {
 		return (
 			<div>
 				<h3>Simple example:</h3>
-				<AutosizeInput
-					value={this.state.value1}
-					onChange={this.updateInputValue.bind(this, 'value1')}
-				/>
+				<AutosizeInput/>
 				<h3>Styled example with default value:</h3>
 				<AutosizeInput
-					value={this.state.value2}
-					onChange={this.updateInputValue.bind(this, 'value2')}
+					defaultValue={this.state.value2}
+					onChange={this.updateInputValue}
 					style={{ background: '#eee', borderRadius: 5, padding: 5 }}
 					inputStyle={{ border: '1px solid #999', borderRadius: 3, padding: 3, fontSize: 14 }}
 				/>
 				<h3>Input with placeholder:</h3>
 				<AutosizeInput
 					placeholder="Placeholder"
-					value={this.state.value3}
-					onChange={this.updateInputValue.bind(this, 'value3')}
 					style={{ background: '#eee', borderRadius: 5, padding: 5 }}
 					inputStyle={{ border: '1px solid #999', borderRadius: 3, padding: 3, fontSize: 14 }}
 				/>
@@ -43,8 +36,6 @@ var App = React.createClass({
 				<AutosizeInput
 					placeholder="Placeholder"
 					placeholderIsMinWidth
-					value={this.state.value4}
-					onChange={this.updateInputValue.bind(this, 'value4')}
 					style={{ background: '#eee', borderRadius: 5, padding: 5 }}
 					inputStyle={{ border: '1px solid #999', borderRadius: 3, padding: 3, fontSize: 14 }}
 				/>

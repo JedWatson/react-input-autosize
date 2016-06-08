@@ -45,7 +45,6 @@ var AutosizeInput = require('react-input-autosize');
 
 <AutosizeInput
 	name="form-field-name"
-	value={inputValue}
 	onChange={function(event) {
 		// event.target.value contains the new value
 	}}
