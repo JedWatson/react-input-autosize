@@ -14,7 +14,7 @@ const AutosizeInput = React.createClass({
 		]),
 		onChange: React.PropTypes.func,                  // onChange handler: function(newValue) {}
 		placeholder: React.PropTypes.string,             // placeholder text
-		placeholderIsMinWidth: React.PropTypes.string,   // don't collapse size to less than the placeholder
+		placeholderIsMinWidth: React.PropTypes.bool,     // don't collapse size to less than the placeholder
 		style: React.PropTypes.object,                   // css styles for the outer element
 		value: React.PropTypes.any,                      // field value
 	},
@@ -31,6 +31,13 @@ const AutosizeInput = React.createClass({
 	componentDidMount () {
 		this.copyInputStyles();
 		this.updateInputWidth();
+	},
+	shouldComponentUpdate (nextProps) {
+		// if this is the first time
+		if (nextProps === this.props) {
+			return true;
+		}
+		return nextProps.value !== this.props.value;
 	},
 	componentDidUpdate () {
 		this.updateInputWidth();
