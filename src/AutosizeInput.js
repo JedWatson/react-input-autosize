@@ -14,7 +14,8 @@ const AutosizeInput = React.createClass({
 		]),
 		onChange: React.PropTypes.func,                  // onChange handler: function(newValue) {}
 		placeholder: React.PropTypes.string,             // placeholder text
-		placeholderIsMinWidth: React.PropTypes.string,   // don't collapse size to less than the placeholder
+		// NOTE: shouldn't the below be a bool
+		placeholderIsMinWidth: React.PropTypes.bool,   // don't collapse size to less than the placeholder
 		style: React.PropTypes.object,                   // css styles for the outer element
 		value: React.PropTypes.any,                      // field value
 	},
@@ -59,6 +60,8 @@ const AutosizeInput = React.createClass({
 		}
 	},
 	updateInputWidth () {
+		// NOTE: Being dependent on sizer.scrollWidth only allows this component to be
+		// rendered an to actual browser and not even with JSDOM
 		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
 			return;
 		}
@@ -96,7 +99,6 @@ const AutosizeInput = React.createClass({
 		const inputStyle = Object.assign({}, this.props.inputStyle);
 		inputStyle.width = this.state.inputWidth + 'px';
 		inputStyle.boxSizing = 'content-box';
-		console.log('inputStyle.width', inputStyle.width)
 		const placeholder = this.props.placeholder ? <div ref="placeholderSizer" style={sizerStyle}>{this.props.placeholder}</div> : null;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
