@@ -45,7 +45,7 @@
     "publish:site": "NODE_ENV=production gulp publish:examples",
     "release": "NODE_ENV=production gulp release",
     "start": "gulp dev",
-    "test": "tape -r babel-register ./src/**/*.test.js | tap-spec",
+    "test": "tape -r babel-register -r ./src/__tests__/setup.js ./src/**/*.test.js | tap-spec",
     "watch": "gulp watch:lib"
   },
   "jest": {

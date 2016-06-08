@@ -13,7 +13,7 @@ var App = React.createClass({
 			value1: '',
 			value2: 'example',
 			value3: '',
-			value4: 'a'
+			value4: ''
 		};
 	},
 	updateInputValue: function updateInputValue(input, event) {
