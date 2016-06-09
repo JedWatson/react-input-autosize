@@ -15,21 +15,6 @@ original -> TestUtils = require('react/addons').addons.TestUtils;
 new -> TestUtils = require('react-addons-test-utils');
 */
 
-/* General Questions
-------------------------------------
-1.  Should placeholderIsMinWidth have a propTye of bool instead of string,
-2.  How to structure the tests "describe"?
-3.  How to move away (if possible) from a dependency on Enzyme's "Full Rendering" and use "Shallow Rendering" instead?
-4.  How to move away (if possible) from having to run the tests with a browser (currently Chrome)?
-5.  Currently, the assertions for the width are against the input itself and not the container. Is that correct?
-5.  Can the core logic that computates the next width be abstracted into a function
-		that can be easily tested. Eg.
-		...
-		const currentWidth = getCurrentWidth();
-		const nextWidth = getNextWidth('example');
-		expect(currentWidth).toBeLessThan(nextWidth);
-*/
-
 /* Test Glossary
 -------------------------------------
 1.  should render <AutosizeInput />
