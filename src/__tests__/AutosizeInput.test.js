@@ -117,7 +117,7 @@ test('should render a default value passed to <AutosizeInput />', (t) => {
 	const value = wrapper.childAt(1).text();
 
 	expect(value).toBe(expected);
-	t.pass('renderes correct default value');
+	t.pass('renderes the default value');
 	t.end();
 });
 
@@ -183,7 +183,7 @@ test('placeholder value should have lower precedence over value', (t) => {
 	const value = wrapper.childAt(1).text();
 
 	expect(value).toBe(expected);
-	t.pass('renderes value over placeholder value when present');
+	t.pass('renderes value over placeholder when a value is passed as well');
 	t.end();
 });
 
@@ -199,7 +199,7 @@ test('placeholder should only set the minimum width if there is value for placeh
 	const { width } = wrapper.find('input').prop('style');
 
 	expect(parsePx(width)).toBeGreaterThan(10);
-	t.pass('renderes value over placeholder value when present');
+	t.pass('the value is correctly being used to compute the width');
 	t.end();
 });
 
