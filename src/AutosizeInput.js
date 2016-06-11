@@ -14,9 +14,8 @@ const AutosizeInput = React.createClass({
 		]),
 		onChange: React.PropTypes.func,                  // onChange handler: function(newValue) {}
 		placeholder: React.PropTypes.string,             // placeholder text
-		placeholderIsMinWidth: React.PropTypes.string,   // don't collapse size to less than the placeholder
 		style: React.PropTypes.object,                   // css styles for the outer element
-		value: React.PropTypes.any,                      // field value
+		placeholderIsMinWidth: React.PropTypes.bool,     // don't collapse size to less than the placeholder
 	},
 	getDefaultProps () {
 		return {
@@ -26,10 +25,12 @@ const AutosizeInput = React.createClass({
 	getInitialState () {
 		return {
 			inputWidth: this.props.minWidth,
+			sizerValue: ''
 		};
 	},
 	componentDidMount () {
 		this.copyInputStyles();
+		this.onInputChange();
 		this.updateInputWidth();
 	},
 	componentDidUpdate () {
@@ -58,12 +59,21 @@ const AutosizeInput = React.createClass({
 			placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
 		}
 	},
+	onInputChange (event) {
+		const value = event ? event.target.value : (this.props.defaultValue || '');
+		this.setState({
+			sizerValue: value
+		});
+		if (this.props.onChange) {
+			this.props.onChange(value, this.state.sizerValue);
+		}
+	},
 	updateInputWidth () {
 		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
 			return;
 		}
 		let newInputWidth;
-		if (this.props.placeholder && (!this.props.value || (this.props.value && this.props.placeholderIsMinWidth))) {
+		if (this.props.placeholder && (!this.state.sizerValue || (this.state.sizerValue && this.props.placeholderIsMinWidth))) {
 			newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
 		} else {
 			newInputWidth = this.refs.sizer.scrollWidth + 2;
@@ -80,6 +90,12 @@ const AutosizeInput = React.createClass({
 	getInput () {
 		return this.refs.input;
 	},
+	setValue (value) {
+		this.refs.input.value = value;
+		this.setState({
+			sizerValue: value
+		});
+	},
 	focus () {
 		this.refs.input.focus();
 	},
@@ -90,7 +106,6 @@ const AutosizeInput = React.createClass({
 		this.refs.input.select();
 	},
 	render () {
-		const sizerValue = (this.props.defaultValue || this.props.value || '');
 		const wrapperStyle = this.props.style || {};
 		if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
 		const inputStyle = Object.assign({}, this.props.inputStyle);
@@ -99,8 +114,8 @@ const AutosizeInput = React.createClass({
 		const placeholder = this.props.placeholder ? <div ref="placeholderSizer" style={sizerStyle}>{this.props.placeholder}</div> : null;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
-				<input {...this.props} ref="input" className={this.props.inputClassName} style={inputStyle} />
-				<div ref="sizer" style={sizerStyle}>{sizerValue}</div>
+				<input {...this.props} ref="input" className={this.props.inputClassName} style={inputStyle} onChange={this.onInputChange} />
+				<div ref="sizer" style={sizerStyle}>{this.state.sizerValue}</div>
 				{placeholder}
 			</div>
 		);
