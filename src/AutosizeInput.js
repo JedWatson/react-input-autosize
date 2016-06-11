@@ -60,13 +60,13 @@ const AutosizeInput = React.createClass({
 		}
 	},
 	onInputChange (event) {
-		const value = event ? event.target.value : (this.props.defaultValue || this.props.value || '');
-		if (this.props.onChange) {
-			this.props.onChange(value, this.state.sizerValue);
-		}
+		const value = event ? event.target.value : (this.props.defaultValue || '');
 		this.setState({
 			sizerValue: value
 		});
+		if (this.props.onChange) {
+			this.props.onChange(value, this.state.sizerValue);
+		}
 	},
 	updateInputWidth () {
 		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
@@ -89,6 +89,12 @@ const AutosizeInput = React.createClass({
 	},
 	getInput () {
 		return this.refs.input;
+	},
+	setValue (value) {
+		this.refs.input.value = value;
+		this.setState({
+			sizerValue: value
+		});
 	},
 	focus () {
 		this.refs.input.focus();

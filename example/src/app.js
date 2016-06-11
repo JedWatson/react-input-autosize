@@ -12,7 +12,11 @@ var App = React.createClass({
 		};
 	},
 	updateInputValue (newValue, oldValue) {
-		console.log(newValue, oldValue);
+		if (this.refs.autosizeInput1) {
+			if (newValue.length > 10) {
+				this.refs.autosizeInput1.setValue(oldValue);
+			}
+		}
 	},
 	render () {
 		return (
@@ -21,6 +25,7 @@ var App = React.createClass({
 				<AutosizeInput/>
 				<h3>Styled example with default value:</h3>
 				<AutosizeInput
+					ref="autosizeInput1"
 					defaultValue={this.state.value2}
 					onChange={this.updateInputValue}
 					style={{ background: '#eee', borderRadius: 5, padding: 5 }}
