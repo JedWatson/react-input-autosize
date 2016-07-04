@@ -14,7 +14,7 @@ const AutosizeInput = React.createClass({
 		]),
 		onChange: React.PropTypes.func,                  // onChange handler: function(newValue) {}
 		placeholder: React.PropTypes.string,             // placeholder text
-		placeholderIsMinWidth: React.PropTypes.string,   // don't collapse size to less than the placeholder
+		placeholderIsMinWidth: React.PropTypes.bool,     // don't collapse size to less than the placeholder
 		style: React.PropTypes.object,                   // css styles for the outer element
 		value: React.PropTypes.any,                      // field value
 	},
