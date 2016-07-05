@@ -17,6 +17,7 @@ const AutosizeInput = React.createClass({
 		placeholderIsMinWidth: React.PropTypes.bool,     // don't collapse size to less than the placeholder
 		style: React.PropTypes.object,                   // css styles for the outer element
 		value: React.PropTypes.any,                      // field value
+		'aria-label': React.PropTypes.string,            // labels the input for assistive devices
 	},
 	getDefaultProps () {
 		return {
@@ -101,7 +102,7 @@ const AutosizeInput = React.createClass({
 		const placeholderElement = placeholder ? <div ref="placeholderSizer" style={sizerStyle}>{placeholder}</div> : null;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
-				<input {...inputProps} ref="input" className={this.props.inputClassName} style={inputStyle} />
+				<input {...inputProps} ref="input" className={this.props.inputClassName} style={inputStyle} aria-label={this.props['aria-label']} />
 				<div ref="sizer" style={sizerStyle}>{sizerValue}</div>
 				{placeholderElement}
 			</div>
