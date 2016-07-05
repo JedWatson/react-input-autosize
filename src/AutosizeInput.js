@@ -17,7 +17,7 @@ const AutosizeInput = React.createClass({
 		placeholderIsMinWidth: React.PropTypes.bool,     // don't collapse size to less than the placeholder
 		style: React.PropTypes.object,                   // css styles for the outer element
 		value: React.PropTypes.any,                      // field value
-		'aria-label': React.PropTypes.string,            // labels the input for assistive devices
+		'aria-label': React.PropTypes.string             // labels the input for assistive devices
 	},
 	getDefaultProps () {
 		return {
