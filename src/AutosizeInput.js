@@ -97,9 +97,10 @@ const AutosizeInput = React.createClass({
 		inputStyle.width = this.state.inputWidth + 'px';
 		inputStyle.boxSizing = 'content-box';
 		const placeholder = this.props.placeholder ? <div ref="placeholderSizer" style={sizerStyle}>{this.props.placeholder}</div> : null;
+		const {minWidth, ...domProps} = this.props;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
-				<input {...this.props} ref="input" className={this.props.inputClassName} style={inputStyle} />
+				<input {...domProps} ref="input" className={this.props.inputClassName} style={inputStyle} />
 				<div ref="sizer" style={sizerStyle}>{sizerValue}</div>
 				{placeholder}
 			</div>
