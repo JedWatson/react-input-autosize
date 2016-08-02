@@ -90,7 +90,14 @@ const AutosizeInput = React.createClass({
 		this.refs.input.select();
 	},
 	render () {
-		const sizerValue = (this.props.defaultValue || this.props.value || '');
+		const sizerValue = [this.props.defaultValue, this.props.value, ''].reduce(function (previousValue, currentValue) {
+			if (previousValue !== null && previousValue !== undefined) {
+				return previousValue;
+			}
+
+			return currentValue;
+		});
+
 		const wrapperStyle = this.props.style || {};
 		if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
 		const inputStyle = Object.assign({}, this.props.inputStyle);
