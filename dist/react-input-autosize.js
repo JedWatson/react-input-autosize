@@ -18,6 +18,7 @@ var AutosizeInput = React.createClass({
 		inputStyle: React.PropTypes.object, // css styles for the input element
 		minWidth: React.PropTypes.oneOfType([// minimum width for input element
 		React.PropTypes.number, React.PropTypes.string]),
+		onAutosize: React.PropTypes.func, // onAutosize handler: function(newWidth) {}
 		onChange: React.PropTypes.func, // onChange handler: function(newValue) {}
 		placeholder: React.PropTypes.string, // placeholder text
 		placeholderIsMinWidth: React.PropTypes.bool, // don't collapse size to less than the placeholder
@@ -38,7 +39,12 @@ var AutosizeInput = React.createClass({
 		this.copyInputStyles();
 		this.updateInputWidth();
 	},
-	componentDidUpdate: function componentDidUpdate() {
+	componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+		if (prevState.inputWidth !== this.state.inputWidth) {
+			if (typeof this.props.onAutosize === 'function') {
+				this.props.onAutosize(this.state.inputWidth);
+			}
+		}
 		this.updateInputWidth();
 	},
 	copyInputStyles: function copyInputStyles() {
@@ -96,7 +102,14 @@ var AutosizeInput = React.createClass({
 		this.refs.input.select();
 	},
 	render: function render() {
-		var sizerValue = this.props.defaultValue || this.props.value || '';
+		var sizerValue = [this.props.defaultValue, this.props.value, ''].reduce(function (previousValue, currentValue) {
+			if (previousValue !== null && previousValue !== undefined) {
+				return previousValue;
+			}
+
+			return currentValue;
+		});
+
 		var wrapperStyle = this.props.style || {};
 		if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
 		var inputStyle = _extends({}, this.props.inputStyle);
