@@ -24,4 +24,11 @@ describe('AutosizeInput test', function () {
 		expect(inputElement.className).toEqual('testClass');
 	});
 
+	it('should change the width', function () {
+		expect(inputElement.style.width).toEqual('1px');
+		inputElement.value = 'foo bar';
+		expect(inputElement.value).toEqual('foo bar');
+		expect(inputElement.style.width).toEqual('39px');
+	});
+
 });
