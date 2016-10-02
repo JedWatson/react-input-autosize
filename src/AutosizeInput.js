@@ -8,6 +8,10 @@ const AutosizeInput = React.createClass({
 		defaultValue: React.PropTypes.any,               // default field value
 		inputClassName: React.PropTypes.string,          // className for the input element
 		inputStyle: React.PropTypes.object,              // css styles for the input element
+		maxWidth: React.PropTypes.oneOfType([            // maximum width for input element
+			React.PropTypes.number,
+			React.PropTypes.string,
+		]),
 		minWidth: React.PropTypes.oneOfType([            // minimum width for input element
 			React.PropTypes.number,
 			React.PropTypes.string,
@@ -74,6 +78,9 @@ const AutosizeInput = React.createClass({
 		} else {
 			newInputWidth = this.refs.sizer.scrollWidth + 2;
 		}
+		if (newInputWidth > this.props.maxWidth) {
+			newInputWidth = this.props.maxWidth;
+		}
 		if (newInputWidth < this.props.minWidth) {
 			newInputWidth = this.props.minWidth;
 		}
@@ -115,6 +122,7 @@ const AutosizeInput = React.createClass({
 		// ensure props meant for `AutosizeInput` don't end up on the `input`
 		delete inputProps.inputClassName;
 		delete inputProps.inputStyle;
+		delete inputProps.maxWidth;
 		delete inputProps.minWidth;
 		delete inputProps.placeholderIsMinWidth;
 		return (
