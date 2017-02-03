@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 const sizerStyle = { position: 'absolute', top: 0, left: 0, visibility: 'hidden', height: 0, overflow: 'scroll', whiteSpace: 'pre' };
 
@@ -136,4 +136,4 @@ const AutosizeInput = React.createClass({
 	},
 });
 
-module.exports = AutosizeInput;
+export default AutosizeInput;
