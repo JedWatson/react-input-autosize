@@ -50,18 +50,18 @@ var AutosizeInput = React.createClass({
 		if (!this.isMounted() || !window.getComputedStyle) {
 			return;
 		}
-		var inputStyle = window.getComputedStyle(this.refs.input);
+		var inputStyle = window.getComputedStyle(this.input);
 		if (!inputStyle) {
 			return;
 		}
-		var widthNode = this.refs.sizer;
+		var widthNode = this.sizer;
 		widthNode.style.fontSize = inputStyle.fontSize;
 		widthNode.style.fontFamily = inputStyle.fontFamily;
 		widthNode.style.fontWeight = inputStyle.fontWeight;
 		widthNode.style.fontStyle = inputStyle.fontStyle;
 		widthNode.style.letterSpacing = inputStyle.letterSpacing;
 		if (this.props.placeholder) {
-			var placeholderNode = this.refs.placeholderSizer;
+			var placeholderNode = this.placeholderSizer;
 			placeholderNode.style.fontSize = inputStyle.fontSize;
 			placeholderNode.style.fontFamily = inputStyle.fontFamily;
 			placeholderNode.style.fontWeight = inputStyle.fontWeight;
@@ -70,14 +70,14 @@ var AutosizeInput = React.createClass({
 		}
 	},
 	updateInputWidth: function updateInputWidth() {
-		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
+		if (!this.isMounted() || typeof this.sizer.scrollWidth === 'undefined') {
 			return;
 		}
 		var newInputWidth = undefined;
 		if (this.props.placeholder && (!this.props.value || this.props.value && this.props.placeholderIsMinWidth)) {
-			newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
+			newInputWidth = Math.max(this.sizer.scrollWidth, this.placeholderSizer.scrollWidth) + 2;
 		} else {
-			newInputWidth = this.refs.sizer.scrollWidth + 2;
+			newInputWidth = this.sizer.scrollWidth + 2;
 		}
 		if (newInputWidth < this.props.minWidth) {
 			newInputWidth = this.props.minWidth;
@@ -89,16 +89,25 @@ var AutosizeInput = React.createClass({
 		}
 	},
 	getInput: function getInput() {
-		return this.refs.input;
+		return this.input;
 	},
 	focus: function focus() {
-		this.refs.input.focus();
+		this.input.focus();
 	},
 	blur: function blur() {
-		this.refs.input.blur();
+		this.input.blur();
 	},
 	select: function select() {
-		this.refs.input.select();
+		this.input.select();
+	},
+	onInputRef: function onInputRef(ref) {
+		this.input = ref;
+	},
+	onSizerRef: function onSizerRef(ref) {
+		this.sizer = ref;
+	},
+	onPlaceholderSizer: function onPlaceholderSizer(ref) {
+		this.placeholderSizer = ref;
 	},
 	render: function render() {
 		var sizerValue = [this.props.defaultValue, this.props.value, ''].reduce(function (previousValue, currentValue) {
@@ -125,15 +134,15 @@ var AutosizeInput = React.createClass({
 		return React.createElement(
 			'div',
 			{ className: this.props.className, style: wrapperStyle },
-			React.createElement('input', _extends({}, inputProps, { ref: 'input' })),
+			React.createElement('input', _extends({}, inputProps, { ref: this.onInputRef })),
 			React.createElement(
 				'div',
-				{ ref: 'sizer', style: sizerStyle },
+				{ ref: this.onSizerRef, style: sizerStyle },
 				sizerValue
 			),
 			this.props.placeholder ? React.createElement(
 				'div',
-				{ ref: 'placeholderSizer', style: sizerStyle },
+				{ ref: this.onPlaceholderSizer, style: sizerStyle },
 				this.props.placeholder
 			) : null
 		);
