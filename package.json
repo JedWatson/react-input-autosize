@@ -11,11 +11,13 @@
   },
   "devDependencies": {
     "babel-jest": "^6.0.1",
+    "create-react-class": "^15.5.1",
     "eslint": "^2.11.1",
     "eslint-config-keystone": "^2.2.0",
     "eslint-plugin-react": "^5.1.1",
     "gulp": "^3.9.0",
     "jest-cli": "^0.8.1",
+    "prop-types": "^15.5.6",
     "react": "^15.0",
     "react-addons-test-utils": "^15.0",
     "react-component-gulp-tasks": "^0.7.6",
