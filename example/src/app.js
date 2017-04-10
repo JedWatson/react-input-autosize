@@ -1,8 +1,9 @@
 var React = require('react');
+var createClass = require('create-react-class');
 var ReactDOM = require('react-dom');
 var AutosizeInput = require('react-input-autosize');
 
-var App = React.createClass({
+var App = createClass({
 	getInitialState () {
 		return {
 			value1: '',

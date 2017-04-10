@@ -1,23 +1,25 @@
 const React = require('react');
+const createClass = require('create-react-class');
+const PropTypes = require('prop-types');
 
 const sizerStyle = { position: 'absolute', top: 0, left: 0, visibility: 'hidden', height: 0, overflow: 'scroll', whiteSpace: 'pre' };
 
-const AutosizeInput = React.createClass({
+const AutosizeInput = createClass({
 	propTypes: {
-		className: React.PropTypes.string,               // className for the outer element
-		defaultValue: React.PropTypes.any,               // default field value
-		inputClassName: React.PropTypes.string,          // className for the input element
-		inputStyle: React.PropTypes.object,              // css styles for the input element
-		minWidth: React.PropTypes.oneOfType([            // minimum width for input element
-			React.PropTypes.number,
-			React.PropTypes.string,
+		className: PropTypes.string,               // className for the outer element
+		defaultValue: PropTypes.any,               // default field value
+		inputClassName: PropTypes.string,          // className for the input element
+		inputStyle: PropTypes.object,              // css styles for the input element
+		minWidth: PropTypes.oneOfType([            // minimum width for input element
+			PropTypes.number,
+			PropTypes.string,
 		]),
-		onAutosize: React.PropTypes.func,                // onAutosize handler: function(newWidth) {}
-		onChange: React.PropTypes.func,                  // onChange handler: function(newValue) {}
-		placeholder: React.PropTypes.string,             // placeholder text
-		placeholderIsMinWidth: React.PropTypes.bool,     // don't collapse size to less than the placeholder
-		style: React.PropTypes.object,                   // css styles for the outer element
-		value: React.PropTypes.any,                      // field value
+		onAutosize: PropTypes.func,                // onAutosize handler: function(newWidth) {}
+		onChange: PropTypes.func,                  // onChange handler: function(newValue) {}
+		placeholder: PropTypes.string,             // placeholder text
+		placeholderIsMinWidth: PropTypes.bool,     // don't collapse size to less than the placeholder
+		style: PropTypes.object,                   // css styles for the outer element
+		value: PropTypes.any,                      // field value
 	},
 	getDefaultProps () {
 		return {
@@ -42,7 +44,7 @@ const AutosizeInput = React.createClass({
 		this.updateInputWidth();
 	},
 	copyInputStyles () {
-		if (!this.isMounted() || !window.getComputedStyle) {
+		if (!window.getComputedStyle) {
 			return;
 		}
 		const inputStyle = window.getComputedStyle(this.refs.input);
@@ -65,7 +67,7 @@ const AutosizeInput = React.createClass({
 		}
 	},
 	updateInputWidth () {
-		if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
+		if (typeof this.refs.sizer.scrollWidth === 'undefined') {
 			return;
 		}
 		let newInputWidth;
