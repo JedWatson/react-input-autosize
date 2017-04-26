@@ -19,16 +19,14 @@ const AutosizeInput = React.createClass({
 		style: React.PropTypes.object,                   // css styles for the outer element
 		value: React.PropTypes.any,                      // field value
 	},
-	refHandlers: {
-		input: function(el) {
-			this.input = el;
-		},
-		placeHolderSizer: function(el) {
-			this.placeHolderSizer = el;
-		},
-		sizer: function(el) {
-			this.sizer = el;
-		},
+	inputRef: function(el) {
+		this.input = el;
+	},
+	placeHolderSizerRef: function(el) {
+		this.placeHolderSizer = el;
+	},
+	sizerRef: function(el) {
+		this.sizer = el;
 	},
 	getDefaultProps () {
 		return {
@@ -130,9 +128,9 @@ const AutosizeInput = React.createClass({
 		delete inputProps.placeholderIsMinWidth;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
-				<input {...inputProps} ref={ this.refHandlers.input.bind(this) } />
-				<div ref={ this.refHandlers.sizer.bind(this) } style={sizerStyle}>{sizerValue}</div>
-				{this.props.placeholder ? <div ref={ this.refHandlers.placeholderSizer.bind(this) } style={sizerStyle}>{this.props.placeholder}</div> : null}
+				<input {...inputProps} ref={ this.inputRef } />
+				<div ref={ this.sizerRef } style={sizerStyle}>{sizerValue}</div>
+				{this.props.placeholder ? <div ref={ this.placeHolderSizerRef } style={sizerStyle}>{this.props.placeholder}</div> : null}
 			</div>
 		);
 	},
