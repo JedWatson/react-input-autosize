@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-bind */
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var AutosizeInput = require('react-input-autosize');

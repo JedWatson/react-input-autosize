@@ -2,7 +2,15 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const createClass = require('create-react-class');
 
-const sizerStyle = { position: 'absolute', top: 0, left: 0, visibility: 'hidden', height: 0, overflow: 'scroll', whiteSpace: 'pre' };
+const sizerStyle = {
+	position: 'absolute',
+	top: 0,
+	left: 0,
+	visibility: 'hidden',
+	height: 0,
+	overflow: 'scroll',
+	whiteSpace: 'pre',
+};
 
 const AutosizeInput = createClass({
 	propTypes: {
@@ -20,15 +28,6 @@ const AutosizeInput = createClass({
 		placeholderIsMinWidth: PropTypes.bool,     // don't collapse size to less than the placeholder
 		style: PropTypes.object,                   // css styles for the outer element
 		value: PropTypes.any,                      // field value
-	},
-	inputRef: function(el) {
-		this.input = el;
-	},
-	placeHolderSizerRef: function(el) {
-		this.placeHolderSizer = el;
-	},
-	sizerRef: function(el) {
-		this.sizer = el;
 	},
 	getDefaultProps () {
 		return {
@@ -51,6 +50,15 @@ const AutosizeInput = createClass({
 			}
 		}
 		this.updateInputWidth();
+	},
+	inputRef (el) {
+		this.input = el;
+	},
+	placeHolderSizerRef (el) {
+		this.placeHolderSizer = el;
+	},
+	sizerRef (el) {
+		this.sizer = el;
 	},
 	copyInputStyles () {
 		if (!this.isMounted() || !window.getComputedStyle) {
@@ -113,7 +121,6 @@ const AutosizeInput = createClass({
 			if (previousValue !== null && previousValue !== undefined) {
 				return previousValue;
 			}
-
 			return currentValue;
 		});
 
@@ -133,9 +140,12 @@ const AutosizeInput = createClass({
 		delete inputProps.placeholderIsMinWidth;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
-				<input {...inputProps} ref={ this.inputRef } />
-				<div ref={ this.sizerRef } style={sizerStyle}>{sizerValue}</div>
-				{this.props.placeholder ? <div ref={ this.placeHolderSizerRef } style={sizerStyle}>{this.props.placeholder}</div> : null}
+				<input {...inputProps} ref={this.inputRef} />
+				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
+				{this.props.placeholder
+					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
+					: null
+				}
 			</div>
 		);
 	},
