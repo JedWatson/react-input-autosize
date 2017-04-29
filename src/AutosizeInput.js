@@ -40,6 +40,7 @@ const AutosizeInput = createClass({
 		};
 	},
 	componentDidMount () {
+		this.mounted = true;
 		this.copyInputStyles();
 		this.updateInputWidth();
 	},
@@ -51,6 +52,9 @@ const AutosizeInput = createClass({
 		}
 		this.updateInputWidth();
 	},
+	componentWillUnmount () {
+		this.mounted = false;
+	},
 	inputRef (el) {
 		this.input = el;
 	},
@@ -61,7 +65,7 @@ const AutosizeInput = createClass({
 		this.sizer = el;
 	},
 	copyInputStyles () {
-		if (!this.isMounted() || !window.getComputedStyle) {
+		if (this.mounted || !window.getComputedStyle) {
 			return;
 		}
 		const inputStyle = this.input && window.getComputedStyle(this.input);
@@ -86,7 +90,7 @@ const AutosizeInput = createClass({
 		}
 	},
 	updateInputWidth () {
-		if (!this.isMounted() || !this.sizer || typeof this.sizer.scrollWidth === 'undefined') {
+		if (!this.mounted || !this.sizer || typeof this.sizer.scrollWidth === 'undefined') {
 			return;
 		}
 		let newInputWidth;
