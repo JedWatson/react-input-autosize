@@ -66,6 +66,7 @@ const AutosizeInput = createClass({
 		widthNode.style.fontWeight = inputStyle.fontWeight;
 		widthNode.style.fontStyle = inputStyle.fontStyle;
 		widthNode.style.letterSpacing = inputStyle.letterSpacing;
+		widthNode.style.textTransform = inputStyle.textTransform;
 		if (this.props.placeholder) {
 			const placeholderNode = this.placeHolderSizer;
 			placeholderNode.style.fontSize = inputStyle.fontSize;
@@ -73,6 +74,7 @@ const AutosizeInput = createClass({
 			placeholderNode.style.fontWeight = inputStyle.fontWeight;
 			placeholderNode.style.fontStyle = inputStyle.fontStyle;
 			placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
+			placeholderNode.style.textTransform = inputStyle.textTransform;
 		}
 	},
 	updateInputWidth () {
