@@ -16,3 +16,4 @@ node_modules
 
 # Build
 .publish
+yarn.lock
