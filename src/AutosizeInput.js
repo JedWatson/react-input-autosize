@@ -127,6 +127,7 @@ const AutosizeInput = createClass({
 		delete inputProps.inputClassName;
 		delete inputProps.inputStyle;
 		delete inputProps.minWidth;
+		delete inputProps.onAutosize;
 		delete inputProps.placeholderIsMinWidth;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
