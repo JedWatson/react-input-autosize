@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-no-bind */
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var AutosizeInput = require('react-input-autosize');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const createClass = require('create-react-class');
+const AutosizeInput = require('react-input-autosize');
 
-var App = React.createClass({
+const App = createClass({
 	getInitialState () {
 		return {
 			value1: '',
@@ -15,7 +16,7 @@ var App = React.createClass({
 		};
 	},
 	updateInputValue (input, event) {
-		var newState = {};
+		const newState = {};
 		newState[input] = event.target.value;
 		this.setState(newState);
 	},
