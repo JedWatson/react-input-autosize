@@ -93,7 +93,7 @@ const AutosizeInput = createClass({
 		if (this.props.placeholder && (!this.props.value || (this.props.value && this.props.placeholderIsMinWidth))) {
 			newInputWidth = Math.max(this.sizer.scrollWidth, this.placeHolderSizer.scrollWidth) + 2;
 		} else {
-			newInputWidth = this.refs.sizer.scrollWidth + 2;
+			newInputWidth = this.sizer.scrollWidth + 2;
 		}
 		if (newInputWidth < this.props.minWidth) {
 			newInputWidth = this.props.minWidth;
