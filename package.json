@@ -11,7 +11,6 @@
   },
   "devDependencies": {
     "babel-jest": "^6.0.1",
-    "create-react-class": "^15.5.2",
     "eslint": "^3.19.0",
     "eslint-config-keystone": "^3.0.0",
     "eslint-config-keystone-react": "^1.0.0",
