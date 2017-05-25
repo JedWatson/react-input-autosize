@@ -17,6 +17,7 @@ const AutosizeInput = createClass({
 		className: PropTypes.string,               // className for the outer element
 		defaultValue: PropTypes.any,               // default field value
 		inputClassName: PropTypes.string,          // className for the input element
+		inputRef: PropTypes.func,                  // ref callback for the input element
 		inputStyle: PropTypes.object,              // css styles for the input element
 		minWidth: PropTypes.oneOfType([            // minimum width for input element
 			PropTypes.number,
@@ -57,6 +58,10 @@ const AutosizeInput = createClass({
 	},
 	inputRef (el) {
 		this.input = el;
+
+		if (this.props.inputRef) {
+			this.props.inputRef(el);
+		}
 	},
 	placeHolderSizerRef (el) {
 		this.placeHolderSizer = el;
@@ -138,6 +143,7 @@ const AutosizeInput = createClass({
 		inputProps.style = inputStyle;
 		// ensure props meant for `AutosizeInput` don't end up on the `input`
 		delete inputProps.inputClassName;
+		delete inputProps.inputRef;
 		delete inputProps.inputStyle;
 		delete inputProps.minWidth;
 		delete inputProps.onAutosize;
