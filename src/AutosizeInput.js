@@ -40,9 +40,9 @@ const AutosizeInput = createClass({
 		};
 	},
 	componentDidMount () {
-		this.mounted = true;
 		this.copyInputStyles();
 		this.updateInputWidth();
+		this.mounted = true;
 	},
 	componentDidUpdate (prevProps, prevState) {
 		if (prevState.inputWidth !== this.state.inputWidth) {
