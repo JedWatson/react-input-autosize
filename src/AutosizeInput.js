@@ -65,7 +65,7 @@ const AutosizeInput = createClass({
 		this.sizer = el;
 	},
 	copyInputStyles () {
-		if (this.mounted || !window.getComputedStyle) {
+		if (!this.mounted || !window.getComputedStyle) {
 			return;
 		}
 		const inputStyle = this.input && window.getComputedStyle(this.input);
