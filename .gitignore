@@ -17,3 +17,8 @@ node_modules
 # Build
 .publish
 yarn.lock
+
+# genererated files
+/lib/
+/dist/
+/example/dist/
