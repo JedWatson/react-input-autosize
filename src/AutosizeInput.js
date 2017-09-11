@@ -12,6 +12,7 @@ const sizerStyle = {
 	whiteSpace: 'pre',
 };
 
+const id = '_' + Math.random().toString(36).substr(2, 9);
 const AutosizeInput = createClass({
 	propTypes: {
 		className: PropTypes.string,               // className for the outer element
@@ -144,7 +145,11 @@ const AutosizeInput = createClass({
 		delete inputProps.placeholderIsMinWidth;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
-				<input {...inputProps} ref={this.inputRef} />
+				<style dangerouslySetInnerHTML={{
+				__html: [`input#${id}::-ms-clear {display: none;}`].join('\n')
+				}}>
+				</style>
+				<input id={id} {...inputProps} ref={this.inputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
 					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
