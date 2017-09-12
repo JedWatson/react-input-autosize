@@ -12,23 +12,17 @@ To run the examples locally, run:
 
 ```
 npm install
-gulp dev
+npm dev
 ```
 
-Then open [localhost:8000](http://localhost:8000) in a browser. This will also watch for file changes and rebuild the examples (includes live reload).
-
-To just build the examples without the dev server or watch tasks, instead run:
-
-```
-gulp build-examples
-```
+Then open [localhost:8000](http://localhost:8000) in a browser.
 
 
 ## Installation
 
-The easiest way to use React-Input-Autosize is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), etc).
+The easiest way to use React-Input-Autosize is to install it from NPM and include it in your own React build process (using Browserify, rollup, webpack, etc).
 
-You can also use the standalone build by including `dist/AutosizeInput.js` in your page. If you use this, make sure you have already included React and Underscore. (they must be available through a browserify-style `require()` call, standalone support is coming soon)
+You can also use the umd build by including `dist/AutosizeInput.js` in your page. If you use this, make sure you have already included a umd React build.
 
 ```
 npm install react-input-autosize --save
@@ -69,7 +63,7 @@ If your input uses custom font sizes, you will need to provide the custom size t
 ```
 
 ### Uncontrolled input
-`AutosizeInput` requires to be a [controlled input](https://facebook.github.io/react/docs/forms.html#controlled-components) for the autosizing to work - it depends on `value` to work as intended.
+`AutosizeInput` is a [controlled input](https://facebook.github.io/react/docs/forms.html#controlled-components) and depends on the `value` prop to work as intended. It does not support being used as an uncontrolled input.
 
 ## License
 
