@@ -1,25 +1,27 @@
 /* eslint-disable react/jsx-no-bind */
 
-const React = require('react');
-const ReactDOM = require('react-dom');
-const createClass = require('create-react-class');
-const AutosizeInput = require('react-input-autosize');
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import AutosizeInput from 'react-input-autosize';
 
-const App = createClass({
-	getInitialState () {
-		return {
+import './example.less';
+
+class App extends Component {
+	constructor (props) {
+		super(props);
+		this.state = {
 			value1: '',
 			value2: 'example',
 			value3: 0,
 			value4: '',
 			value5: '',
 		};
-	},
-	updateInputValue (input, event) {
+	}
+	updateInputValue = (input, event) => {
 		const newState = {};
 		newState[input] = event.target.value;
 		this.setState(newState);
-	},
+	}
 	render () {
 		return (
 			<div>
@@ -60,7 +62,7 @@ const App = createClass({
 				/>
 			</div>
 		);
-	},
-});
+	}
+};
 
 ReactDOM.render(<App />, document.getElementById('app'));
