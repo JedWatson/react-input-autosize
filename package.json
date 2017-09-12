@@ -57,8 +57,9 @@
   },
   "scripts": {
     "build": "nps build",
+    "build-examples": "nps examples",
     "lint": "eslint ./; true",
-    "publish:examples": "NODE_ENV=production nps publish",
+    "publish-examples": "NODE_ENV=production nps publish",
     "start": "webpack-dev-server --progress",
     "test": "jest; true"
   },

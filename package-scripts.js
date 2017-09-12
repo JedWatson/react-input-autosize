@@ -14,6 +14,15 @@ module.exports = {
 			),
 			rollup: 'rollup --config',
 			babel: 'babel src -d lib',
+		},
+		examples: {
+			default: series(
+				rimraf('examples/dist'),
+				'mkdir examples/dist',
+				concurrent.nps('examples.webpack', 'examples.standalone'),
+				'cp examples/src/.gitignore examples/dist/.gitignore'
+			),
+			webpack: 'webpack --progress -p',
 			standalone: series(
 				'cp examples/src/standalone.html examples/dist/standalone.html',
 				'lessc examples/src/example.less examples/dist/example.css'
@@ -21,9 +30,7 @@ module.exports = {
 		},
 		publish: {
 			default: series(
-				rimraf('examples/dist'),
-				'webpack --progress -p',
-				'cp examples/src/.gitignore examples/dist/.gitignore',
+				concurrent.nps('examples'),
 				'git subtree push --prefix examples/dist origin gh-pages'
 			),
 		},
