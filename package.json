@@ -24,8 +24,6 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "eslint": "^3.19.0",
     "eslint-config-keystone": "^3.0.0",
@@ -39,7 +37,6 @@
     "nps": "^5.7.1",
     "nps-utils": "^1.3.0",
     "react": "^15.0",
-    "react-addons-test-utils": "^15.0",
     "react-dom": "^15.0",
     "rollup": "^0.49.2",
     "rollup-plugin-babel": "^3.0.2",
@@ -68,8 +65,7 @@
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/fbjs",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/react-addons-test-utils"
+      "<rootDir>/node_modules/react-dom"
     ],
     "roots": [
       "<rootDir>/src"
