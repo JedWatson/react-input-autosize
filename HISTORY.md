@@ -1,5 +1,9 @@
 # react-input-autosize
 
+## v2.0.1 / 2017-09-13
+
+* fixed; peer dependencies for `prop-types`
+
 ## v2.0.0 / 2017-09-12
 
 * fixed; converted to es6 Class and removed `create-react-class`
