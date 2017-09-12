@@ -1,0 +1,4 @@
+{
+  "ignore": ["node-modules/**", "src/index.umd.js"],
+  "presets": [ "es2015", "react"],
+}

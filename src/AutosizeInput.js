@@ -1,6 +1,6 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const createClass = require('create-react-class');
+import React from 'react';
+import PropTypes from 'prop-types';
+import createClass from 'create-react-class';
 
 const sizerStyle = {
 	position: 'absolute',
@@ -146,9 +146,8 @@ const AutosizeInput = createClass({
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				<style dangerouslySetInnerHTML={{
-				__html: [`input#${id}::-ms-clear {display: none;}`].join('\n')
-				}}>
-				</style>
+					__html: [`input#${id}::-ms-clear {display: none;}`].join('\n'),
+				}}/>
 				<input id={id} {...inputProps} ref={this.inputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
@@ -160,4 +159,4 @@ const AutosizeInput = createClass({
 	},
 });
 
-module.exports = AutosizeInput;
+export default AutosizeInput;
