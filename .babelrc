@@ -1,4 +1,8 @@
 {
-  "ignore": ["node-modules/**", "src/index.umd.js"],
-  "presets": [ "es2015", "react"],
+  "ignore": ["node-modules/**"],
+  "presets": [
+    ["es2015", { "modules": false }],
+    "stage-2",
+    "react",
+  ],
 }
