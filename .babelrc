@@ -1,7 +1,7 @@
 {
-  "ignore": ["node-modules/**"],
+  "ignore": ["node-modules/**", "src/__tests__"],
   "presets": [
-    ["es2015", { "modules": false }],
+    ["es2015"],
     "stage-2",
     "react",
   ],

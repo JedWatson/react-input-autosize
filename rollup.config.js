@@ -14,7 +14,7 @@ const globals = {
 const external = Object.keys(globals);
 const babelOptions = {
 	babelrc: false,
-	presets: [['es2015', { modules: false }], 'react'],
+	presets: [['es2015', { modules: false }], 'stage-2', 'react'],
 	plugins: ['external-helpers'],
 };
 
