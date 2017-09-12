@@ -1,6 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const createClass = require('create-react-class');
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const sizerStyle = {
 	position: 'absolute',
@@ -12,40 +11,19 @@ const sizerStyle = {
 	whiteSpace: 'pre',
 };
 
-const AutosizeInput = createClass({
-	propTypes: {
-		className: PropTypes.string,               // className for the outer element
-		defaultValue: PropTypes.any,               // default field value
-		inputClassName: PropTypes.string,          // className for the input element
-		inputRef: PropTypes.func,                  // ref callback for the input element
-		inputStyle: PropTypes.object,              // css styles for the input element
-		minWidth: PropTypes.oneOfType([            // minimum width for input element
-			PropTypes.number,
-			PropTypes.string,
-		]),
-		onAutosize: PropTypes.func,                // onAutosize handler: function(newWidth) {}
-		onChange: PropTypes.func,                  // onChange handler: function(newValue) {}
-		placeholder: PropTypes.string,             // placeholder text
-		placeholderIsMinWidth: PropTypes.bool,     // don't collapse size to less than the placeholder
-		style: PropTypes.object,                   // css styles for the outer element
-		value: PropTypes.any,                      // field value
-	},
-	getDefaultProps () {
-		return {
-			minWidth: 1,
-		};
-	},
-	getInitialState () {
-		return {
-			inputWidth: this.props.minWidth,
+class AutosizeInput extends Component {
+	constructor (props) {
+		super(props);
+		this.state = {
+			inputWidth: props.minWidth,
 			inputId: '_' + Math.random().toString(36).substr(2, 12),
 		};
-	},
+	}
 	componentDidMount () {
 		this.mounted = true;
 		this.copyInputStyles();
 		this.updateInputWidth();
-	},
+	}
 	componentDidUpdate (prevProps, prevState) {
 		if (prevState.inputWidth !== this.state.inputWidth) {
 			if (typeof this.props.onAutosize === 'function') {
@@ -53,22 +31,22 @@ const AutosizeInput = createClass({
 			}
 		}
 		this.updateInputWidth();
-	},
+	}
 	componentWillUnmount () {
 		this.mounted = false;
-	},
-	inputRef (el) {
+	}
+	inputRef = (el) => {
 		this.input = el;
 		if (typeof this.props.inputRef === 'function') {
 			this.props.inputRef(el);
 		}
-	},
-	placeHolderSizerRef (el) {
+	}
+	placeHolderSizerRef = (el) => {
 		this.placeHolderSizer = el;
-	},
-	sizerRef (el) {
+	}
+	sizerRef = (el) => {
 		this.sizer = el;
-	},
+	}
 	copyInputStyles () {
 		if (!this.mounted || !window.getComputedStyle) {
 			return;
@@ -93,7 +71,7 @@ const AutosizeInput = createClass({
 			placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
 			placeholderNode.style.textTransform = inputStyle.textTransform;
 		}
-	},
+	}
 	updateInputWidth () {
 		if (!this.mounted || !this.sizer || typeof this.sizer.scrollWidth === 'undefined') {
 			return;
@@ -112,33 +90,33 @@ const AutosizeInput = createClass({
 				inputWidth: newInputWidth,
 			});
 		}
-	},
+	}
 	getInput () {
 		return this.input;
-	},
+	}
 	focus () {
 		this.input.focus();
-	},
+	}
 	blur () {
 		this.input.blur();
-	},
+	}
 	select () {
 		this.input.select();
-	},
+	}
 	render () {
-		const sizerValue = [this.props.defaultValue, this.props.value, ''].reduce(function (previousValue, currentValue) {
+		const sizerValue = [this.props.defaultValue, this.props.value, ''].reduce((previousValue, currentValue) => {
 			if (previousValue !== null && previousValue !== undefined) {
 				return previousValue;
 			}
 			return currentValue;
 		});
 
-		const wrapperStyle = this.props.style || {};
+		const wrapperStyle = { ...this.props.style };
 		if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
-		const inputStyle = Object.assign({}, this.props.inputStyle);
+		const inputStyle = { ...this.props.inputStyle };
 		inputStyle.width = this.state.inputWidth + 'px';
 		inputStyle.boxSizing = 'content-box';
-		const inputProps = Object.assign({}, this.props);
+		const { ...inputProps } = this.props;
 		inputProps.className = this.props.inputClassName;
 		inputProps.style = inputStyle;
 		// ensure props meant for `AutosizeInput` don't end up on the `input`
@@ -161,7 +139,28 @@ const AutosizeInput = createClass({
 				}
 			</div>
 		);
-	},
-});
+	}
+};
 
-module.exports = AutosizeInput;
+AutosizeInput.propTypes = {
+	className: PropTypes.string,               // className for the outer element
+	defaultValue: PropTypes.any,               // default field value
+	inputClassName: PropTypes.string,          // className for the input element
+	inputRef: PropTypes.func,                  // ref callback for the input element
+	inputStyle: PropTypes.object,              // css styles for the input element
+	minWidth: PropTypes.oneOfType([            // minimum width for input element
+		PropTypes.number,
+		PropTypes.string,
+	]),
+	onAutosize: PropTypes.func,                // onAutosize handler: function(newWidth) {}
+	onChange: PropTypes.func,                  // onChange handler: function(newValue) {}
+	placeholder: PropTypes.string,             // placeholder text
+	placeholderIsMinWidth: PropTypes.bool,     // don't collapse size to less than the placeholder
+	style: PropTypes.object,                   // css styles for the outer element
+	value: PropTypes.any,                      // field value
+};
+AutosizeInput.defaultProps = {
+	minWidth: 1,
+};
+
+export default AutosizeInput;

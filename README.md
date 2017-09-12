@@ -12,7 +12,7 @@ To run the examples locally, run:
 
 ```
 npm install
-npm dev
+npm start
 ```
 
 Then open [localhost:8000](http://localhost:8000) in a browser.
@@ -35,7 +35,7 @@ React-Input-Autosize generates an input field, wrapped in a `<div>` tag so it ca
 
 
 ```es6
-var AutosizeInput = require('react-input-autosize');
+import AutosizeInput from 'react-input-autosize';
 
 <AutosizeInput
 	name="form-field-name"
