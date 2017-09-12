@@ -1,11 +1,5 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react'), require('prop-types')) :
-	typeof define === 'function' && define.amd ? define(['react', 'prop-types'], factory) :
-	(global.AutosizeInput = factory(global.React,global.PropTypes));
-}(this, (function (React,PropTypes) { 'use strict';
-
-var React__default = 'default' in React ? React['default'] : React;
-PropTypes = PropTypes && PropTypes.hasOwnProperty('default') ? PropTypes['default'] : PropTypes;
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 var asyncGenerator = function () {
   function AwaitValue(value) {
@@ -370,19 +364,19 @@ var AutosizeInput = function (_Component) {
 			delete inputProps.onAutosize;
 			delete inputProps.placeholderIsMinWidth;
 			delete inputProps.inputRef;
-			return React__default.createElement(
+			return React.createElement(
 				'div',
 				{ className: this.props.className, style: wrapperStyle },
-				React__default.createElement('style', { dangerouslySetInnerHTML: {
+				React.createElement('style', { dangerouslySetInnerHTML: {
 						__html: ['input#' + this.state.id + '::-ms-clear {display: none;}'].join('\n')
 					} }),
-				React__default.createElement('input', _extends({ id: this.state.id }, inputProps, { ref: this.inputRef })),
-				React__default.createElement(
+				React.createElement('input', _extends({ id: this.state.id }, inputProps, { ref: this.inputRef })),
+				React.createElement(
 					'div',
 					{ ref: this.sizerRef, style: sizerStyle },
 					sizerValue
 				),
-				this.props.placeholder ? React__default.createElement(
+				this.props.placeholder ? React.createElement(
 					'div',
 					{ ref: this.placeHolderSizerRef, style: sizerStyle },
 					this.props.placeholder
@@ -391,7 +385,7 @@ var AutosizeInput = function (_Component) {
 		}
 	}]);
 	return AutosizeInput;
-}(React.Component);
+}(Component);
 
 
 
@@ -414,6 +408,4 @@ AutosizeInput.defaultProps = {
 	minWidth: 1
 };
 
-return AutosizeInput;
-
-})));
+export default AutosizeInput;
