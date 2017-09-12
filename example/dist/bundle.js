@@ -1881,12 +1881,12 @@ var sizerStyle = {
 	whiteSpace: 'pre'
 };
 
-var id = '_' + Math.random().toString(36).substr(2, 9);
 var AutosizeInput = createClass({
 	propTypes: {
 		className: PropTypes.string, // className for the outer element
 		defaultValue: PropTypes.any, // default field value
 		inputClassName: PropTypes.string, // className for the input element
+		inputRef: PropTypes.func, // ref callback for the input element
 		inputStyle: PropTypes.object, // css styles for the input element
 		minWidth: PropTypes.oneOfType([// minimum width for input element
 		PropTypes.number, PropTypes.string]),
@@ -1904,7 +1904,8 @@ var AutosizeInput = createClass({
 	},
 	getInitialState: function getInitialState() {
 		return {
-			inputWidth: this.props.minWidth
+			inputWidth: this.props.minWidth,
+			inputId: '_' + Math.random().toString(36).substr(2, 12)
 		};
 	},
 	componentDidMount: function componentDidMount() {
@@ -1925,6 +1926,9 @@ var AutosizeInput = createClass({
 	},
 	inputRef: function inputRef(el) {
 		this.input = el;
+		if (typeof this.props.inputRef === 'function') {
+			this.props.inputRef(el);
+		}
 	},
 	placeHolderSizerRef: function placeHolderSizerRef(el) {
 		this.placeHolderSizer = el;
@@ -1933,7 +1937,7 @@ var AutosizeInput = createClass({
 		this.sizer = el;
 	},
 	copyInputStyles: function copyInputStyles() {
-		if (this.mounted || !window.getComputedStyle) {
+		if (!this.mounted || !window.getComputedStyle) {
 			return;
 		}
 		var inputStyle = this.input && window.getComputedStyle(this.input);
@@ -2010,13 +2014,14 @@ var AutosizeInput = createClass({
 		delete inputProps.minWidth;
 		delete inputProps.onAutosize;
 		delete inputProps.placeholderIsMinWidth;
+		delete inputProps.inputRef;
 		return React.createElement(
 			'div',
 			{ className: this.props.className, style: wrapperStyle },
 			React.createElement('style', { dangerouslySetInnerHTML: {
-					__html: ['input#' + id + '::-ms-clear {display: none;}'].join('\n')
+					__html: ['input#' + this.state.id + '::-ms-clear {display: none;}'].join('\n')
 				} }),
-			React.createElement('input', _extends({ id: id }, inputProps, { ref: this.inputRef })),
+			React.createElement('input', _extends({ id: this.state.id }, inputProps, { ref: this.inputRef })),
 			React.createElement(
 				'div',
 				{ ref: this.sizerRef, style: sizerStyle },

@@ -12,12 +12,12 @@ const sizerStyle = {
 	whiteSpace: 'pre',
 };
 
-const id = '_' + Math.random().toString(36).substr(2, 9);
 const AutosizeInput = createClass({
 	propTypes: {
 		className: PropTypes.string,               // className for the outer element
 		defaultValue: PropTypes.any,               // default field value
 		inputClassName: PropTypes.string,          // className for the input element
+		inputRef: PropTypes.func,                  // ref callback for the input element
 		inputStyle: PropTypes.object,              // css styles for the input element
 		minWidth: PropTypes.oneOfType([            // minimum width for input element
 			PropTypes.number,
@@ -38,6 +38,7 @@ const AutosizeInput = createClass({
 	getInitialState () {
 		return {
 			inputWidth: this.props.minWidth,
+			inputId: '_' + Math.random().toString(36).substr(2, 12),
 		};
 	},
 	componentDidMount () {
@@ -58,6 +59,9 @@ const AutosizeInput = createClass({
 	},
 	inputRef (el) {
 		this.input = el;
+		if (typeof this.props.inputRef === 'function') {
+			this.props.inputRef(el);
+		}
 	},
 	placeHolderSizerRef (el) {
 		this.placeHolderSizer = el;
@@ -143,12 +147,13 @@ const AutosizeInput = createClass({
 		delete inputProps.minWidth;
 		delete inputProps.onAutosize;
 		delete inputProps.placeholderIsMinWidth;
+		delete inputProps.inputRef;
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				<style dangerouslySetInnerHTML={{
-					__html: [`input#${id}::-ms-clear {display: none;}`].join('\n'),
-				}}/>
-				<input id={id} {...inputProps} ref={this.inputRef} />
+					__html: [`input#${this.state.id}::-ms-clear {display: none;}`].join('\n'),
+				}} />
+				<input id={this.state.id} {...inputProps} ref={this.inputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
 					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
