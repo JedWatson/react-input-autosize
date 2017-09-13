@@ -1,8 +1,5 @@
 'use strict';
-/* global describe, it, jest, expect */
-
-// jest.dontMock('../AutosizeInput');
-
+/* global describe, it, expect */
 import React from 'react';
 import TestUtils from 'react-dom/test-utils';
 import AutosizeInput from '../AutosizeInput';
