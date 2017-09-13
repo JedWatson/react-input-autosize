@@ -56,7 +56,7 @@
     "react": "global:React"
   },
   "scripts": {
-    "build": "nps build",
+    "build": "NODE_ENV=production nps build",
     "build-examples": "nps examples",
     "lint": "eslint ./; true",
     "publish-examples": "NODE_ENV=production nps publish",
