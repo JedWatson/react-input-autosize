@@ -52,9 +52,6 @@
   "peerDependencies": {
     "react": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0"
   },
-  "browserify-shim": {
-    "react": "global:React"
-  },
   "scripts": {
     "build": "NODE_ENV=production nps build",
     "build-examples": "nps examples",
