@@ -48,6 +48,11 @@ import AutosizeInput from 'react-input-autosize';
 
 ## Gotchas
 
+### Changing the styles at runtime
+The styles applied to the input are only copied when the component mounts. Because of this, subsequent changes to the stylesheet may cause size to be detected incorrectly.
+
+To work around this, either re-mount the input (e.g. by providing a different `key` prop) or call the `copyInputStyles()` method after the styles change.
+
 ### CSP and the IE "clear" indicator
 The input will automatically inject a stylesheet that hides IE/Edge's "clear" indicator, which otherwise breaks the UI. This has the downside of being incompatible with some CSP policies.
 
