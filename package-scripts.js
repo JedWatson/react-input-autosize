@@ -31,7 +31,7 @@ module.exports = {
 		publish: {
 			default: series(
 				concurrent.nps('examples'),
-				'git subtree push --prefix examples/dist origin gh-pages'
+				'gh-pages -d examples/dist'
 			),
 		},
 	},
