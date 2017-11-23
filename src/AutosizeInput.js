@@ -113,9 +113,11 @@ class AutosizeInput extends Component {
 
 		const wrapperStyle = { ...this.props.style };
 		if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
-		const inputStyle = { ...this.props.inputStyle };
-		inputStyle.width = this.state.inputWidth + 'px';
-		inputStyle.boxSizing = 'content-box';
+		const inputStyle = {
+			boxSizing: 'content-box',
+			width: this.state.inputWidht + 'px',
+			...this.props.inputStyle,
+		};
 		const { ...inputProps } = this.props;
 		inputProps.className = this.props.inputClassName;
 		inputProps.style = inputStyle;
