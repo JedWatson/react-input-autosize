@@ -11,6 +11,13 @@ const sizerStyle = {
 	whiteSpace: 'pre',
 };
 
+const removeAutosizeInputFields = inputProps => {
+	const fieldsToRemove = ['inputClassName', 'inputStyle', 'minWidth', 'onAutosize', 'placeholderIsMinWidth', 'inputRef'];
+	fieldsToRemove.forEach(field => delete inputProps[field]);
+	
+	return inputProps;
+};
+
 class AutosizeInput extends Component {
 	constructor (props) {
 		super(props);
@@ -121,23 +128,18 @@ class AutosizeInput extends Component {
 		const { ...inputProps } = this.props;
 		inputProps.className = this.props.inputClassName;
 		inputProps.style = inputStyle;
-		// ensure props meant for `AutosizeInput` don't end up on the `input`
-		delete inputProps.inputClassName;
-		delete inputProps.inputStyle;
-		delete inputProps.minWidth;
-		delete inputProps.onAutosize;
-		delete inputProps.placeholderIsMinWidth;
-		delete inputProps.inputRef;
+		// ensure props meant for `AutosizeInput` don't end up on the `input`		
+		const validInputProps = removeAutosizeInputFields(inputProps);
+		
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				<style dangerouslySetInnerHTML={{
 					__html: [`input#${this.state.inputId}::-ms-clear {display: none;}`].join('\n'),
 				}} />
-				<input id={this.state.inputId} {...inputProps} ref={this.inputRef} />
+				<input id={this.state.inputId} {...validInputProps} ref={this.inputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
-				{this.props.placeholder
-					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
-					: null
+				{this.props.placeholder && 
+					<div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
 				}
 			</div>
 		);
