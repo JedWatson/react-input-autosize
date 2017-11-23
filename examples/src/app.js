@@ -27,6 +27,7 @@ class App extends Component {
 			<div>
 				<h3>Simple example:</h3>
 				<AutosizeInput
+					autoFocus
 					value={this.state.value1}
 					onChange={this.updateInputValue.bind(this, 'value1')}
 				/>
