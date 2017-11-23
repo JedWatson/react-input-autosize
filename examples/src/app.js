@@ -12,7 +12,7 @@ class App extends Component {
 		this.state = {
 			value1: '',
 			value2: 'example',
-			value3: 0,
+			value3: 3,
 			value4: '',
 			value5: '',
 		};

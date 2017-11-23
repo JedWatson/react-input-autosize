@@ -94,6 +94,10 @@ class AutosizeInput extends Component {
 		} else {
 			newInputWidth = this.sizer.scrollWidth + 2;
 		}
+		// allow for stepper UI on number types
+		if (this.props.type === 'number') {
+			newInputWidth += 16;
+		}
 		if (newInputWidth < this.props.minWidth) {
 			newInputWidth = this.props.minWidth;
 		}
