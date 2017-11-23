@@ -12,12 +12,13 @@ const sizerStyle = {
 };
 
 const INPUT_PROPS_BLACKLIST = [
+	'injectStyles',
 	'inputClassName',
+	'inputRef',
 	'inputStyle',
 	'minWidth',
 	'onAutosize',
 	'placeholderIsMinWidth',
-	'inputRef',
 ];
 
 const cleanInputProps = (inputProps) => {
@@ -114,6 +115,14 @@ class AutosizeInput extends Component {
 	select () {
 		this.input.select();
 	}
+	renderStyles () {
+		const { injectStyles } = this.props;
+		return injectStyles ? (
+			<style dangerouslySetInnerHTML={{
+				__html: `input#${this.state.inputId}::-ms-clear {display: none;}`,
+			}} />
+		) : null;
+	}
 	render () {
 		const sizerValue = [this.props.defaultValue, this.props.value, ''].reduce((previousValue, currentValue) => {
 			if (previousValue !== null && previousValue !== undefined) {
@@ -138,9 +147,7 @@ class AutosizeInput extends Component {
 
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
-				<style dangerouslySetInnerHTML={{
-					__html: `input#${this.state.inputId}::-ms-clear {display: none;}`,
-				}} />
+				{this.renderStyles()}
 				<input id={this.state.inputId} {...inputProps} ref={this.inputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
@@ -155,6 +162,7 @@ class AutosizeInput extends Component {
 AutosizeInput.propTypes = {
 	className: PropTypes.string,               // className for the outer element
 	defaultValue: PropTypes.any,               // default field value
+	injectStyles: PropTypes.bool,              // inject the custom stylesheet to hide clear UI, defaults to true
 	inputClassName: PropTypes.string,          // className for the input element
 	inputRef: PropTypes.func,                  // ref callback for the input element
 	inputStyle: PropTypes.object,              // css styles for the input element
@@ -171,6 +179,7 @@ AutosizeInput.propTypes = {
 };
 AutosizeInput.defaultProps = {
 	minWidth: 1,
+	injectStyles: true,
 };
 
 export default AutosizeInput;
