@@ -1,6 +1,6 @@
 <!doctype html>
 <head>
-	<title>React-Autosize-Input Standalone Example</title>
+	<title>react-autosize-input umd example</title>
 	<link rel="stylesheet" href="example.css">
 </head>
 <body>
@@ -10,17 +10,18 @@
 			<!-- the React application is loaded in the #example element -->
 		<div id="example"></div>
 		<div class="hint">
-			The component above is provided by the standalone build, and React is loaded from cdnjs.
+			The component above is provided by the umd build, and React is loaded from <a href="https://unpkg.com/">unpkg</a>.
 		</div>
-		<div><a href="/">Back to the main example</a></div>
 		<div class="footer">
-			Copyright &copy; Jed Watson 2014. MIT Licensed.
+			Copyright &copy; Jed Watson 2017. MIT Licensed.
 		</div>
 	</div>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.12.0/JSXTransformer.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.12.0/react.js"></script>
-	<script src="standalone.js"></script>
-	<script type="text/jsx">
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js" charset="utf-8"></script>
+	<script src="https://unpkg.com/react@15.6.1/dist/react.js"></script>
+	<script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.js"></script>
+	<script src="https://unpkg.com/prop-types@15.5.10/prop-types.js"></script>
+	<script src="../../dist/react-input-autosize.js"></script>
+	<script type="text/babel">
 		var Example = React.createClass({
 			getInitialState: function() {
 				return {
@@ -33,9 +34,9 @@
 				});
 			},
 			render: function() {
-				return <AutosizeInput value={this.state.inputValue} onChange={this.updateValue} />
+				return <AutosizeInput autoFocus value={this.state.inputValue} onChange={this.updateValue} />
 			}
 		});
-		React.render(<Example />, document.getElementById('example'));
+		ReactDOM.render(<Example />, document.getElementById('example'));
 	</script>
 </body>
