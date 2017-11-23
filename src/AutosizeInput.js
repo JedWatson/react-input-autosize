@@ -129,9 +129,9 @@ class AutosizeInput extends Component {
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				<style dangerouslySetInnerHTML={{
-					__html: [`input#${this.state.id}::-ms-clear {display: none;}`].join('\n'),
+					__html: [`input#${this.state.inputId}::-ms-clear {display: none;}`].join('\n'),
 				}} />
-				<input id={this.state.id} {...inputProps} ref={this.inputRef} />
+				<input id={this.state.inputId} {...inputProps} ref={this.inputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
 					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
