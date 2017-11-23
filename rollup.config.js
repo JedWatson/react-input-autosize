@@ -12,10 +12,16 @@ const globals = {
 };
 
 const external = Object.keys(globals);
-const babelOptions = {
-	babelrc: false,
-	presets: [['es2015', { modules: false }], 'stage-2', 'react'],
-	plugins: ['external-helpers'],
+const babelOptions = (production) => {
+        let result = {
+		babelrc: false,
+		presets: [['es2015', { modules: false }], 'stage-2', 'react'],
+		plugins: ['external-helpers'],
+	};
+        if (production) {
+                result.plugins.push('transform-react-remove-prop-types');
+        };
+        return result;
 };
 
 export default [
@@ -26,7 +32,7 @@ export default [
 			format: 'es',
 		},
 		external: external,
-		plugins: [babel(babelOptions)],
+		plugins: [babel(babelOptions(false))],
 	},
 	{
 		input: 'src/AutosizeInput.js',
@@ -37,7 +43,7 @@ export default [
 		},
 		globals: globals,
 		external: external,
-		plugins: [babel(babelOptions), resolve()],
+		plugins: [babel(babelOptions(false)), resolve()],
 	},
 	{
 		input: 'src/AutosizeInput.js',
@@ -48,6 +54,6 @@ export default [
 		},
 		globals: globals,
 		external: external,
-		plugins: [babel(babelOptions), resolve(), uglify({}, minify)],
+		plugins: [babel(babelOptions(true)), resolve(), uglify({}, minify)],
 	},
 ];
