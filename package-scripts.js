@@ -28,11 +28,5 @@ module.exports = {
 				'lessc examples/src/example.less examples/dist/example.css'
 			),
 		},
-		publish: {
-			default: series(
-				concurrent.nps('examples'),
-				'gh-pages -d examples/dist'
-			),
-		},
 	},
 };
