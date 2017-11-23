@@ -120,9 +120,11 @@ class AutosizeInput extends Component {
 
 		const wrapperStyle = { ...this.props.style };
 		if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
-		const inputStyle = { ...this.props.inputStyle };
-		inputStyle.width = this.state.inputWidth + 'px';
-		inputStyle.boxSizing = 'content-box';
+		const inputStyle = {
+			boxSizing: 'content-box',
+			width: this.state.inputWidht + 'px',
+			...this.props.inputStyle,
+		};
 		const { ...inputProps } = this.props;
 		inputProps.className = this.props.inputClassName;
 		inputProps.style = inputStyle;
@@ -132,9 +134,9 @@ class AutosizeInput extends Component {
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				<style dangerouslySetInnerHTML={{
-					__html: [`input#${this.state.id}::-ms-clear {display: none;}`].join('\n'),
+					__html: [`input#${this.state.inputId}::-ms-clear {display: none;}`].join('\n'),
 				}} />
-				<input id={this.state.id} {...validInputProps} ref={this.inputRef} />
+				<input id={this.state.inputId} {...validInputProps} ref={this.inputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder && 
 					<div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
