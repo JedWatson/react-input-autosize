@@ -45,7 +45,10 @@ module.exports = {
 	},
 	resolve: {
 		alias: {
-			'react-input-autosize': path.resolve(__dirname, 'src/AutosizeInput'),
+			'react-input-autosize': path.resolve(
+				__dirname,
+				'src/AutosizeInput'
+			),
 		},
 	},
 	plugins: [

@@ -1,4 +1,4 @@
 module.exports = {
-  extends: 'keystone-react',
-  parser: 'babel-eslint',
+	extends: 'keystone-react',
+	parser: 'babel-eslint',
 };
