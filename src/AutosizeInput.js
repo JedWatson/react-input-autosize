@@ -35,18 +35,28 @@ const copyStyles = (styles, node) => {
 	node.style.textTransform = styles.textTransform;
 };
 
+function generateId () {
+	return '_' + Math.random().toString(36).substr(2, 12);
+}
+
 class AutosizeInput extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
 			inputWidth: props.minWidth,
-			inputId: '_' + Math.random().toString(36).substr(2, 12),
+			inputId: props.id || generateId(),
 		};
 	}
 	componentDidMount () {
 		this.mounted = true;
 		this.copyInputStyles();
 		this.updateInputWidth();
+	}
+	componentWillReceiveProps (nextProps) {
+		const { id } = nextProps;
+		if (id !== this.props.id) {
+			this.setState({ inputId: id || generateId() });
+		}
 	}
 	componentDidUpdate (prevProps, prevState) {
 		if (prevState.inputWidth !== this.state.inputWidth) {
@@ -152,7 +162,7 @@ class AutosizeInput extends Component {
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				{this.renderStyles()}
-				<input id={this.state.inputId} {...inputProps} ref={this.inputRef} />
+				<input {...inputProps} id={this.state.inputId} ref={this.inputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
 					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
@@ -166,6 +176,7 @@ class AutosizeInput extends Component {
 AutosizeInput.propTypes = {
 	className: PropTypes.string,               // className for the outer element
 	defaultValue: PropTypes.any,               // default field value
+	id: PropTypes.string,                      // id to use for the input, can be set for consistent snapshots
 	injectStyles: PropTypes.bool,              // inject the custom stylesheet to hide clear UI, defaults to true
 	inputClassName: PropTypes.string,          // className for the input element
 	inputRef: PropTypes.func,                  // ref callback for the input element
