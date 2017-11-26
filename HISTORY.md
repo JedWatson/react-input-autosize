@@ -1,5 +1,17 @@
 # react-input-autosize
 
+## v2.1.1 / 2017-11-26
+
+* fixed; `props.id` was overriding the internal `inputId` on the input element, but not being used in the stylesheet
+* fixed; IE stylesheet is now only injected when IE is detected in navigator.userAgent
+
+## v2.1.0 / 2017-11-23
+
+* fixed; inputId wasn't being applied correctly, thanks [Jacco Flenter](https://github.com/flenter)
+* added; new `injectStyles` prop controls whether the IE stylesheet it injected
+* improved; allow override of `boxSizing` and `width` styles via `inputStyles`, thanks [Mike Fanger](https://github.com/mvf4z7)
+* improved; propTypes are now stripped from the production build, thanks [jochenberger](https://github.com/jochenberger)
+
 ## v2.0.1 / 2017-09-13
 
 * fixed; peer dependencies for `prop-types`
