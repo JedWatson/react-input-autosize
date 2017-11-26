@@ -236,6 +236,14 @@ var copyStyles = function copyStyles(styles, node) {
 	node.style.textTransform = styles.textTransform;
 };
 
+var isIE = /MSIE |Trident\/|Edge\//.test(window.navigator.userAgent);
+
+var generateId = function generateId() {
+	// we only need an auto-generated ID for stylesheet injection, which is only
+	// used for IE. so if the browser is not IE, this should return undefined.
+	return isIE ? '_' + Math.random().toString(36).substr(2, 12) : undefined;
+};
+
 var AutosizeInput = function (_Component) {
 	inherits(AutosizeInput, _Component);
 
@@ -261,7 +269,7 @@ var AutosizeInput = function (_Component) {
 
 		_this.state = {
 			inputWidth: props.minWidth,
-			inputId: '_' + Math.random().toString(36).substr(2, 12)
+			inputId: props.id || generateId()
 		};
 		return _this;
 	}
@@ -272,6 +280,15 @@ var AutosizeInput = function (_Component) {
 			this.mounted = true;
 			this.copyInputStyles();
 			this.updateInputWidth();
+		}
+	}, {
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			var id = nextProps.id;
+
+			if (id !== this.props.id) {
+				this.setState({ inputId: id || generateId() });
+			}
 		}
 	}, {
 		key: 'componentDidUpdate',
@@ -351,9 +368,12 @@ var AutosizeInput = function (_Component) {
 	}, {
 		key: 'renderStyles',
 		value: function renderStyles() {
+			// this method injects styles to hide IE's clear indicator, which messes
+			// with input size detection. the stylesheet is only injected when the
+			// browser is IE, and can also be disabled by the `injectStyles` prop.
 			var injectStyles = this.props.injectStyles;
 
-			return injectStyles ? React.createElement('style', { dangerouslySetInnerHTML: {
+			return isIE && injectStyles ? React.createElement('style', { dangerouslySetInnerHTML: {
 					__html: 'input#' + this.state.inputId + '::-ms-clear {display: none;}'
 				} }) : null;
 		}
@@ -379,13 +399,14 @@ var AutosizeInput = function (_Component) {
 
 			cleanInputProps(inputProps);
 			inputProps.className = this.props.inputClassName;
+			inputProps.id = this.state.inputId;
 			inputProps.style = inputStyle;
 
 			return React.createElement(
 				'div',
 				{ className: this.props.className, style: wrapperStyle },
 				this.renderStyles(),
-				React.createElement('input', _extends({ id: this.state.inputId }, inputProps, { ref: this.inputRef })),
+				React.createElement('input', _extends({}, inputProps, { ref: this.inputRef })),
 				React.createElement(
 					'div',
 					{ ref: this.sizerRef, style: sizerStyle },
@@ -407,6 +428,7 @@ var AutosizeInput = function (_Component) {
 AutosizeInput.propTypes = {
 	className: PropTypes.string, // className for the outer element
 	defaultValue: PropTypes.any, // default field value
+	id: PropTypes.string, // id to use for the input, can be set for consistent snapshots
 	injectStyles: PropTypes.bool, // inject the custom stylesheet to hide clear UI, defaults to true
 	inputClassName: PropTypes.string, // className for the input element
 	inputRef: PropTypes.func, // ref callback for the input element
