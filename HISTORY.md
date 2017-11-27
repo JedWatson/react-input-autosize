@@ -1,5 +1,9 @@
 # react-input-autosize
 
+## v2.1.2 / 2017-11-27
+
+* fixed; `window` reference is now guarded for SSR support, thanks [Wout Mertens](https://github.com/wmertens)
+
 ## v2.1.1 / 2017-11-26
 
 * fixed; `props.id` was overriding the internal `inputId` on the input element, but not being used in the stylesheet
