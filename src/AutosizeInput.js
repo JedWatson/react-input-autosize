@@ -7,7 +7,7 @@ const sizerStyle = {
 	left: 0,
 	visibility: 'hidden',
 	height: 0,
-	overflow: 'scroll',
+	overflow: 'hidden',
 	whiteSpace: 'pre',
 };
 
