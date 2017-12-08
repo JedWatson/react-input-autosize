@@ -35,7 +35,7 @@ const copyStyles = (styles, node) => {
 	node.style.textTransform = styles.textTransform;
 };
 
-const isIE = (typeof window === 'undefined') ? false : /MSIE |Trident\/|Edge\//.test(window.navigator.userAgent);
+const isIE = (typeof window === 'undefined' && window.document) ? false : /MSIE |Trident\/|Edge\//.test(window.navigator.userAgent);
 
 const generateId = () => {
 	// we only need an auto-generated ID for stylesheet injection, which is only
