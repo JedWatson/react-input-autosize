@@ -429,8 +429,6 @@ var AutosizeInput = function (_Component) {
 	return AutosizeInput;
 }(React.Component);
 
-
-
 AutosizeInput.propTypes = {
 	className: PropTypes.string, // className for the outer element
 	defaultValue: PropTypes.any, // default field value
@@ -442,7 +440,7 @@ AutosizeInput.propTypes = {
 	minWidth: PropTypes.oneOfType([// minimum width for input element
 	PropTypes.number, PropTypes.string]),
 	onAutosize: PropTypes.func, // onAutosize handler: function(newWidth) {}
-	onChange: PropTypes.func, // onChange handler: function(newValue) {}
+	onChange: PropTypes.func, // onChange handler: function(event) {}
 	placeholder: PropTypes.string, // placeholder text
 	placeholderIsMinWidth: PropTypes.bool, // don't collapse size to less than the placeholder
 	style: PropTypes.object, // css styles for the outer element

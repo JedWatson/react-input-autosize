@@ -21,7 +21,7 @@ class App extends Component {
 		const newState = {};
 		newState[input] = event.target.value;
 		this.setState(newState);
-	}
+	};
 	render () {
 		return (
 			<div>
