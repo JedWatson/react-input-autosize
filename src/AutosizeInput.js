@@ -12,6 +12,7 @@ const sizerStyle = {
 };
 
 const INPUT_PROPS_BLACKLIST = [
+	'extraWidth',
 	'injectStyles',
 	'inputClassName',
 	'inputRef',
@@ -108,10 +109,10 @@ class AutosizeInput extends Component {
 		} else {
 			newInputWidth = this.sizer.scrollWidth + 2;
 		}
-		// allow for stepper UI on number types
-		if (this.props.type === 'number') {
-			newInputWidth += 16;
-		}
+		// add extraWidth to the detected width. for number types, this defaults to 16 to allow for the stepper UI
+		const extraWidth = (this.props.type === 'number' && this.props.extraWidth === undefined)
+			? 16 : parseInt(this.props.extraWidth) || 0;
+		newInputWidth += extraWidth;
 		if (newInputWidth < this.props.minWidth) {
 			newInputWidth = this.props.minWidth;
 		}
@@ -184,6 +185,10 @@ class AutosizeInput extends Component {
 AutosizeInput.propTypes = {
 	className: PropTypes.string,               // className for the outer element
 	defaultValue: PropTypes.any,               // default field value
+	extraWidth: PropTypes.oneOfType([          // additional width for input element
+		PropTypes.number,
+		PropTypes.string,
+	]),
 	id: PropTypes.string,                      // id to use for the input, can be set for consistent snapshots
 	injectStyles: PropTypes.bool,              // inject the custom stylesheet to hide clear UI, defaults to true
 	inputClassName: PropTypes.string,          // className for the input element
