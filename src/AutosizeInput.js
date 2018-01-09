@@ -78,13 +78,13 @@ class AutosizeInput extends Component {
 		if (typeof this.props.inputRef === 'function') {
 			this.props.inputRef(el);
 		}
-	}
+	};
 	placeHolderSizerRef = (el) => {
 		this.placeHolderSizer = el;
-	}
+	};
 	sizerRef = (el) => {
 		this.sizer = el;
-	}
+	};
 	copyInputStyles () {
 		if (!this.mounted || !window.getComputedStyle) {
 			return;
@@ -179,7 +179,7 @@ class AutosizeInput extends Component {
 			</div>
 		);
 	}
-};
+}
 
 AutosizeInput.propTypes = {
 	className: PropTypes.string,               // className for the outer element
@@ -194,7 +194,7 @@ AutosizeInput.propTypes = {
 		PropTypes.string,
 	]),
 	onAutosize: PropTypes.func,                // onAutosize handler: function(newWidth) {}
-	onChange: PropTypes.func,                  // onChange handler: function(newValue) {}
+	onChange: PropTypes.func,                  // onChange handler: function(event) {}
 	placeholder: PropTypes.string,             // placeholder text
 	placeholderIsMinWidth: PropTypes.bool,     // don't collapse size to less than the placeholder
 	style: PropTypes.object,                   // css styles for the outer element
