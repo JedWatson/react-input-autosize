@@ -1,6 +1,6 @@
 {
   "name": "react-input-autosize",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Auto-resizing Input Component for React",
   "main": "lib/AutosizeInput.js",
   "js:next": "dist/react-input-autosize.es.js",
