@@ -224,7 +224,7 @@ var sizerStyle = {
 	whiteSpace: 'pre'
 };
 
-var INPUT_PROPS_BLACKLIST = ['injectStyles', 'inputClassName', 'inputRef', 'inputStyle', 'minWidth', 'onAutosize', 'placeholderIsMinWidth'];
+var INPUT_PROPS_BLACKLIST = ['extraWidth', 'injectStyles', 'inputClassName', 'inputRef', 'inputStyle', 'minWidth', 'onAutosize', 'placeholderIsMinWidth'];
 
 var cleanInputProps = function cleanInputProps(inputProps) {
 	INPUT_PROPS_BLACKLIST.forEach(function (field) {
@@ -242,7 +242,7 @@ var copyStyles = function copyStyles(styles, node) {
 	node.style.textTransform = styles.textTransform;
 };
 
-var isIE = typeof window === 'undefined' ? false : /MSIE |Trident\/|Edge\//.test(window.navigator.userAgent);
+var isIE = typeof window === 'undefined' && window.document ? false : /MSIE |Trident\/|Edge\//.test(window.navigator.userAgent);
 
 var generateId = function generateId() {
 	// we only need an auto-generated ID for stylesheet injection, which is only
@@ -338,10 +338,9 @@ var AutosizeInput = function (_Component) {
 			} else {
 				newInputWidth = this.sizer.scrollWidth + 2;
 			}
-			// allow for stepper UI on number types
-			if (this.props.type === 'number') {
-				newInputWidth += 16;
-			}
+			// add extraWidth to the detected width. for number types, this defaults to 16 to allow for the stepper UI
+			var extraWidth = this.props.type === 'number' && this.props.extraWidth === undefined ? 16 : parseInt(this.props.extraWidth) || 0;
+			newInputWidth += extraWidth;
 			if (newInputWidth < this.props.minWidth) {
 				newInputWidth = this.props.minWidth;
 			}
@@ -432,6 +431,8 @@ var AutosizeInput = function (_Component) {
 AutosizeInput.propTypes = {
 	className: PropTypes.string, // className for the outer element
 	defaultValue: PropTypes.any, // default field value
+	extraWidth: PropTypes.oneOfType([// additional width for input element
+	PropTypes.number, PropTypes.string]),
 	id: PropTypes.string, // id to use for the input, can be set for consistent snapshots
 	injectStyles: PropTypes.bool, // inject the custom stylesheet to hide clear UI, defaults to true
 	inputClassName: PropTypes.string, // className for the input element
