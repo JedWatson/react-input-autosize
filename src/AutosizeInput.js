@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import renamePropsWithWarning from 'react-deprecate';
 import PropTypes from 'prop-types';
 
 const sizerStyle = {
@@ -15,7 +16,7 @@ const INPUT_PROPS_BLACKLIST = [
 	'extraWidth',
 	'injectStyles',
 	'inputClassName',
-	'inputRef',
+	'innerRef',
 	'inputStyle',
 	'minWidth',
 	'onAutosize',
@@ -74,10 +75,10 @@ class AutosizeInput extends Component {
 	componentWillUnmount () {
 		this.mounted = false;
 	}
-	inputRef = (el) => {
+	getInputRef = (el) => {
 		this.input = el;
-		if (typeof this.props.inputRef === 'function') {
-			this.props.inputRef(el);
+		if (typeof this.props.innerRef === 'function') {
+			this.props.innerRef(el);
 		}
 	};
 	placeHolderSizerRef = (el) => {
@@ -171,7 +172,7 @@ class AutosizeInput extends Component {
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				{this.renderStyles()}
-				<input {...inputProps} ref={this.inputRef} />
+				<input {...inputProps} ref={this.getInputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
 					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
@@ -191,8 +192,8 @@ AutosizeInput.propTypes = {
 	]),
 	id: PropTypes.string,                      // id to use for the input, can be set for consistent snapshots
 	injectStyles: PropTypes.bool,              // inject the custom stylesheet to hide clear UI, defaults to true
+	innerRef: PropTypes.func,                  // ref callback for the input element
 	inputClassName: PropTypes.string,          // className for the input element
-	inputRef: PropTypes.func,                  // ref callback for the input element
 	inputStyle: PropTypes.object,              // css styles for the input element
 	minWidth: PropTypes.oneOfType([            // minimum width for input element
 		PropTypes.number,
@@ -210,4 +211,4 @@ AutosizeInput.defaultProps = {
 	injectStyles: true,
 };
 
-export default AutosizeInput;
+export default renamePropsWithWarning(AutosizeInput, { inputRef: 'innerRef' });

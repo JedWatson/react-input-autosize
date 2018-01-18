@@ -11,7 +11,8 @@
     "url": "https://github.com/JedWatson/react-input-autosize.git"
   },
   "dependencies": {
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "react-deprecate": "^0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
