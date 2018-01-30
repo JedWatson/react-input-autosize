@@ -1,15 +1,15 @@
 {
   "presets": [
-    ["es2015"],
+    ["env"],
     "stage-2",
-    "react",
+    "react"
   ],
 	"env": {
 		"production": {
-			"ignore": ["node-modules/**", "src/__tests__/**"],
+			"ignore": ["node-modules/**", "src/__tests__/**"]
 		},
 		"test": {
-			"ignore": ["node-modules/**"],
+			"ignore": ["node-modules/**"]
 		}
 	}
 }
