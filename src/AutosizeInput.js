@@ -162,16 +162,18 @@ class AutosizeInput extends Component {
 			...this.props.inputStyle,
 		};
 
-		const { ...inputProps } = this.props;
-		cleanInputProps(inputProps);
-		inputProps.className = this.props.inputClassName;
-		inputProps.id = this.state.inputId;
-		inputProps.style = inputStyle;
+		const { inputProps } = this.props;
+
+		const nextInputProps = { ...inputProps };
+		cleanInputProps(nextInputProps);
+		nextInputProps.className = this.props.inputClassName;
+		nextInputProps.id = this.state.inputId;
+		nextInputProps.style = inputStyle;
 
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				{this.renderStyles()}
-				<input {...inputProps} ref={this.inputRef} />
+				<input {...nextInputProps} ref={this.inputRef} />
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
 					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
