@@ -1,4 +1,4 @@
-React-Input-Autosize
+React-Input-Autosize with normal bundle size and fixed bugs
 ====================
 
 A text input for [React](http://facebook.github.io/react/index.html) that resizes itself to the current content.
@@ -6,13 +6,11 @@ A text input for [React](http://facebook.github.io/react/index.html) that resize
 
 ## Demo & Examples
 
-Live demo: [jedwatson.github.io/react-input-autosize](http://jedwatson.github.io/react-input-autosize/)
-
 To run the examples locally, run:
 
 ```
-npm install
-npm start
+yarn
+yarn start
 ```
 
 Then open [localhost:8000](http://localhost:8000) in a browser.
@@ -20,12 +18,8 @@ Then open [localhost:8000](http://localhost:8000) in a browser.
 
 ## Installation
 
-The easiest way to use React-Input-Autosize is to install it from NPM and include it in your own React build process (using Browserify, rollup, webpack, etc).
-
-You can also use the umd build by including `dist/AutosizeInput.js` in your page. If you use this, make sure you have already included a umd React build.
-
 ```
-npm install react-input-autosize --save
+yarn add react-input-autosize
 ```
 
 
@@ -81,4 +75,4 @@ If your input uses custom font sizes, you will need to provide the custom size t
 
 ## License
 
-Copyright (c) 2018 Jed Watson. [MIT](LICENSE) License.
+Copyright (c) 2018 Ostap Chervak. [MIT](LICENSE) License.
