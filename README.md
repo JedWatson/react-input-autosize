@@ -69,7 +69,7 @@ If your input uses custom font sizes, you will need to provide the custom size t
 <AutosizeInput
 	name="form-field-name"
 	value={inputValue}
-	style={{ fontSize: 36 }}
+	inputStyle={{ fontSize: 36 }}
 	onChange={function(event) {
 		// event.target.value contains the new value
 	}}
