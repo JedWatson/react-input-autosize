@@ -288,17 +288,11 @@ var AutosizeInput = function (_Component) {
 			this.updateInputWidth();
 		}
 	}, {
-		key: 'componentWillReceiveProps',
-		value: function componentWillReceiveProps(nextProps) {
-			var id = nextProps.id;
-
-			if (id !== this.props.id) {
-				this.setState({ inputId: id || generateId() });
-			}
-		}
-	}, {
 		key: 'componentDidUpdate',
 		value: function componentDidUpdate(prevProps, prevState) {
+			if (prevProps.id !== this.props.id) {
+				this.setState({ inputId: this.props.id || generateId() });
+			}
 			if (prevState.inputWidth !== this.state.inputWidth) {
 				if (typeof this.props.onAutosize === 'function') {
 					this.props.onAutosize(this.state.inputWidth);
