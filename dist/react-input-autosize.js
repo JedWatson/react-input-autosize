@@ -224,7 +224,7 @@ var sizerStyle = {
 	whiteSpace: 'pre'
 };
 
-var INPUT_PROPS_BLACKLIST = ['extraWidth', 'injectStyles', 'inputClassName', 'inputRef', 'inputStyle', 'minWidth', 'onAutosize', 'placeholderIsMinWidth'];
+var INPUT_PROPS_BLACKLIST = ['extraWidth', 'injectStyles', 'inputClassName', 'inputRef', 'inputStyle', 'inputIsTextArea', 'minWidth', 'onAutosize', 'placeholderIsMinWidth'];
 
 var cleanInputProps = function cleanInputProps(inputProps) {
 	INPUT_PROPS_BLACKLIST.forEach(function (field) {
@@ -379,7 +379,7 @@ var AutosizeInput = function (_Component) {
 			var injectStyles = this.props.injectStyles;
 
 			return isIE && injectStyles ? React__default.createElement('style', { dangerouslySetInnerHTML: {
-					__html: 'input#' + this.state.inputId + '::-ms-clear {display: none;}'
+					__html: 'input#' + this.state.inputId + '::-ms-clear, textarea#' + this.state.inputId + '::-ms-clear {display: none;}'
 				} }) : null;
 		}
 	}, {
@@ -411,7 +411,7 @@ var AutosizeInput = function (_Component) {
 				'div',
 				{ className: this.props.className, style: wrapperStyle },
 				this.renderStyles(),
-				React__default.createElement('input', _extends({}, inputProps, { ref: this.inputRef })),
+				this.props.inputIsTextArea ? React__default.createElement('textarea', _extends({}, inputProps, { ref: this.inputRef, wrap: 'off' })) : React__default.createElement('input', _extends({}, inputProps, { ref: this.inputRef })),
 				React__default.createElement(
 					'div',
 					{ ref: this.sizerRef, style: sizerStyle },
@@ -438,6 +438,7 @@ AutosizeInput.propTypes = {
 	inputClassName: PropTypes.string, // className for the input element
 	inputRef: PropTypes.func, // ref callback for the input element
 	inputStyle: PropTypes.object, // css styles for the input element
+	inputIsTextArea: PropTypes.bool, // switch to textarea instead of input (don't strip line-breaks)
 	minWidth: PropTypes.oneOfType([// minimum width for input element
 	PropTypes.number, PropTypes.string]),
 	onAutosize: PropTypes.func, // onAutosize handler: function(newWidth) {}

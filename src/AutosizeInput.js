@@ -17,6 +17,7 @@ const INPUT_PROPS_BLACKLIST = [
 	'inputClassName',
 	'inputRef',
 	'inputStyle',
+	'inputIsTextArea',
 	'minWidth',
 	'onAutosize',
 	'placeholderIsMinWidth',
@@ -141,7 +142,7 @@ class AutosizeInput extends Component {
 		const { injectStyles } = this.props;
 		return isIE && injectStyles ? (
 			<style dangerouslySetInnerHTML={{
-				__html: `input#${this.state.inputId}::-ms-clear {display: none;}`,
+				__html: `input#${this.state.inputId}::-ms-clear, textarea#${this.state.inputId}::-ms-clear {display: none;}`,
 			}} />
 		) : null;
 	}
@@ -171,7 +172,9 @@ class AutosizeInput extends Component {
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				{this.renderStyles()}
-				<input {...inputProps} ref={this.inputRef} />
+				{this.props.inputIsTextArea
+					? <textarea {...inputProps} ref={this.inputRef} wrap="off" />
+					: <input {...inputProps} ref={this.inputRef} />}
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
 					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
@@ -194,6 +197,7 @@ AutosizeInput.propTypes = {
 	inputClassName: PropTypes.string,          // className for the input element
 	inputRef: PropTypes.func,                  // ref callback for the input element
 	inputStyle: PropTypes.object,              // css styles for the input element
+	inputIsTextArea: PropTypes.bool,           // switch to textarea instead of input (don't strip line-breaks)
 	minWidth: PropTypes.oneOfType([            // minimum width for input element
 		PropTypes.number,
 		PropTypes.string,

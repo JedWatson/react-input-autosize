@@ -79,6 +79,9 @@ If your input uses custom font sizes, you will need to provide the custom size t
 ### Uncontrolled input
 `AutosizeInput` is a [controlled input](https://facebook.github.io/react/docs/forms.html#controlled-components) and depends on the `value` prop to work as intended. It does not support being used as an uncontrolled input.
 
+### Copy&Paste and line-breaks
+The `input` tag does always strip line-breaks on paste. To overcome this restriction, you can pass the `inputIsTextArea={true}` prop.
+
 ## License
 
 Copyright (c) 2018 Jed Watson. [MIT](LICENSE) License.
