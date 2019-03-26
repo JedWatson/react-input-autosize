@@ -162,16 +162,17 @@ class AutosizeInput extends Component {
 			...this.props.inputStyle,
 		};
 
-		const { ...inputProps } = this.props;
+		const { renderInput, ...inputProps } = this.props;
 		cleanInputProps(inputProps);
 		inputProps.className = this.props.inputClassName;
 		inputProps.id = this.state.inputId;
 		inputProps.style = inputStyle;
+		inputProps.ref = this.inputRef;
 
 		return (
 			<div className={this.props.className} style={wrapperStyle}>
 				{this.renderStyles()}
-				<input {...inputProps} ref={this.inputRef} />
+				{renderInput ? renderInput(inputProps) : <input {...inputProps} />}
 				<div ref={this.sizerRef} style={sizerStyle}>{sizerValue}</div>
 				{this.props.placeholder
 					? <div ref={this.placeHolderSizerRef} style={sizerStyle}>{this.props.placeholder}</div>
@@ -204,6 +205,7 @@ AutosizeInput.propTypes = {
 	placeholderIsMinWidth: PropTypes.bool,     // don't collapse size to less than the placeholder
 	style: PropTypes.object,                   // css styles for the outer element
 	value: PropTypes.any,                      // field value
+	renderInput: PropTypes.func,               // custom input renderer
 };
 AutosizeInput.defaultProps = {
 	minWidth: 1,
