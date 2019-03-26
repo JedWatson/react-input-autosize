@@ -76,6 +76,22 @@ If your input uses custom font sizes, you will need to provide the custom size t
 />
 ```
 
+### Custom input
+If your input uses custom font sizes, you will need to provide the custom size to `AutosizeInput`.
+
+```es6
+<AutosizeInput
+	name="form-field-name"
+	value={inputValue}
+	onChange={function(event) {
+		// event.target.value contains the new value
+	}}
+	renderInput={() => (
+		<MyInput />
+	)}
+/>
+```
+
 ### Uncontrolled input
 `AutosizeInput` is a [controlled input](https://facebook.github.io/react/docs/forms.html#controlled-components) and depends on the `value` prop to work as intended. It does not support being used as an uncontrolled input.
 
