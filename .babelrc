@@ -1,15 +1,18 @@
 {
   "presets": [
-    ["es2015"],
-    "stage-2",
-    "react",
+    ["@babel/env", { "loose": true }],
+    "@babel/react"
   ],
-	"env": {
-		"production": {
-			"ignore": ["node-modules/**", "src/__tests__/**"],
-		},
-		"test": {
-			"ignore": ["node-modules/**"],
-		}
-	}
+  "plugins": [
+    ["@babel/proposal-class-properties", { "loose": true }],
+    ["transform-react-remove-prop-types", { "mode": "unsafe-wrap" }]
+  ],
+  "env": {
+    "production": {
+      "ignore": ["node-modules/**", "src/__tests__/**"],
+    },
+    "test": {
+      "ignore": ["node-modules/**"],
+    }
+  }
 }

@@ -1,59 +1,73 @@
 import babel from 'rollup-plugin-babel';
-import resolve from 'rollup-plugin-node-resolve';
-import uglify from 'rollup-plugin-uglify';
-import { minify } from 'uglify-es';
+import nodeResolve from 'rollup-plugin-node-resolve';
+import replace from 'rollup-plugin-replace';
+import { terser } from 'rollup-plugin-terser';
+import pkg from './package.json';
 
+const input = './src/AutosizeInput.js';
 const name = 'AutosizeInput';
 const path = 'dist/react-input-autosize';
 const globals = {
 	'prop-types': 'PropTypes',
-	'react-dom': 'ReactDOM',
 	'react': 'React',
 };
 
-const external = Object.keys(globals);
-const babelOptions = production => {
-	let result = {
-		babelrc: false,
-		presets: [['es2015', { modules: false }], 'stage-2', 'react'],
-		plugins: ['external-helpers'],
-	};
-	if (production) {
-		result.plugins.push('transform-react-remove-prop-types');
-	}
-	return result;
-};
+const external = id =>
+	!id.startsWith('.') && !id.startsWith('/') && !id.startsWith(':');
+
+const getBabelOptions = ({ useESModules }) => ({
+	runtimeHelpers: true,
+	plugins: [['@babel/transform-runtime', { useESModules }]],
+});
 
 export default [
 	{
-		input: 'src/AutosizeInput.js',
+		input,
 		output: {
-			file: path + '.es.js',
-			format: 'es',
+			file: pkg.main,
+			format: 'cjs',
 		},
-		external: external,
-		plugins: [babel(babelOptions(false))],
+		external,
+		plugins: [babel(getBabelOptions({ useESModules: false }))],
 	},
 	{
-		input: 'src/AutosizeInput.js',
+		input,
 		output: {
-			name: name,
+			file: pkg.module,
+			format: 'esm',
+		},
+		external,
+		plugins: [babel(getBabelOptions({ useESModules: true }))],
+	},
+	{
+		input,
+		output: {
+			name,
+			globals,
 			file: path + '.js',
 			format: 'umd',
 		},
-		globals: globals,
-		external: external,
-		plugins: [babel(babelOptions(false)), resolve()],
+		external: Object.keys(globals),
+		plugins: [
+			nodeResolve(),
+			babel(getBabelOptions({ useESModules: true })),
+			replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
+		],
 	},
 	{
-		input: 'src/AutosizeInput.js',
+		input,
 		output: {
-			name: name,
+			name,
+			globals,
 			file: path + '.min.js',
 			format: 'umd',
 		},
-		globals: globals,
-		external: external,
-		plugins: [babel(babelOptions(true)), resolve(), uglify({}, minify)],
+		external: Object.keys(globals),
+		plugins: [
+			nodeResolve(),
+			babel(getBabelOptions({ useESModules: true })),
+			replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+			terser(),
+		],
 	},
 ];

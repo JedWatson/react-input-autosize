@@ -17,3 +17,5 @@ node_modules
 # Build
 .publish
 yarn.lock
+dist/*.cjs.js
+dist/*.esm.js
