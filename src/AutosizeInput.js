@@ -45,23 +45,30 @@ const generateId = () => {
 };
 
 class AutosizeInput extends Component {
+	// https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html#updating-state-based-on-props
+	static getDerivedStateFromProps (props, state) {
+		const { id } = props;
+		if (id !== state.prevPropId) {
+			return {
+				...state,
+				inputId: id || generateId(),
+				prevPropId: id
+			}
+		}
+		return null;
+	}
 	constructor (props) {
 		super(props);
 		this.state = {
 			inputWidth: props.minWidth,
 			inputId: props.id || generateId(),
+			prevPropId: null
 		};
 	}
 	componentDidMount () {
 		this.mounted = true;
 		this.copyInputStyles();
 		this.updateInputWidth();
-	}
-	componentWillReceiveProps (nextProps) {
-		const { id } = nextProps;
-		if (id !== this.props.id) {
-			this.setState({ inputId: id || generateId() });
-		}
 	}
 	componentDidUpdate (prevProps, prevState) {
 		if (prevState.inputWidth !== this.state.inputWidth) {
