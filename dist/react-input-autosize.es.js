@@ -246,6 +246,22 @@ var generateId = function generateId() {
 
 var AutosizeInput = function (_Component) {
 	inherits(AutosizeInput, _Component);
+	createClass(AutosizeInput, null, [{
+		key: 'getDerivedStateFromProps',
+
+		// https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html#updating-state-based-on-props
+		value: function getDerivedStateFromProps(props, state) {
+			var id = props.id;
+
+			if (id !== state.prevPropId) {
+				return _extends({}, state, {
+					inputId: id || generateId(),
+					prevPropId: id
+				});
+			}
+			return null;
+		}
+	}]);
 
 	function AutosizeInput(props) {
 		classCallCheck(this, AutosizeInput);
@@ -269,7 +285,8 @@ var AutosizeInput = function (_Component) {
 
 		_this.state = {
 			inputWidth: props.minWidth,
-			inputId: props.id || generateId()
+			inputId: props.id || generateId(),
+			prevPropId: null
 		};
 		return _this;
 	}
@@ -280,15 +297,6 @@ var AutosizeInput = function (_Component) {
 			this.mounted = true;
 			this.copyInputStyles();
 			this.updateInputWidth();
-		}
-	}, {
-		key: 'componentWillReceiveProps',
-		value: function componentWillReceiveProps(nextProps) {
-			var id = nextProps.id;
-
-			if (id !== this.props.id) {
-				this.setState({ inputId: id || generateId() });
-			}
 		}
 	}, {
 		key: 'componentDidUpdate',
