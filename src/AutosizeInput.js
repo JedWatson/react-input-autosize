@@ -57,7 +57,7 @@ class AutosizeInput extends Component {
 		this.copyInputStyles();
 		this.updateInputWidth();
 	}
-	componentWillReceiveProps (nextProps) {
+	UNSAFE_componentWillReceiveProps (nextProps) {
 		const { id } = nextProps;
 		if (id !== this.props.id) {
 			this.setState({ inputId: id || generateId() });
