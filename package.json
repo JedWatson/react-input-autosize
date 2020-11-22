@@ -1,5 +1,5 @@
 {
-  "name": "react-input-autosize",
+  "name": "react-input-autosize-oss",
   "version": "2.2.2",
   "description": "Auto-resizing Input Component for React",
   "main": "lib/AutosizeInput.js",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JedWatson/react-input-autosize.git"
+    "url": "https://github.com/react-select-oss/react-input-autosize.git"
   },
   "dependencies": {
     "prop-types": "^15.5.8"
