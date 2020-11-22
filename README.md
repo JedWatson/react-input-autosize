@@ -1,6 +1,12 @@
 React-Input-Autosize
 ====================
 
+This is intended to be the authoritative fork of react-input-autosize while the original react-input-autosize is not being actively maintained. The end goal is that the original react-input-autosize becomes maintained again and this repository can be archived.
+
+This fork will be released under the npm package name `react-input-autosize-oss`.
+
+---
+
 A text input for [React](http://facebook.github.io/react/index.html) that resizes itself to the current content.
 
 
