@@ -45,23 +45,22 @@ const generateId = () => {
 };
 
 class AutosizeInput extends Component {
+	static getDerivedStateFromProps (props, state) {
+		const { id } = props;
+		return id !== state.prevId ? { inputId: id || generateId() } : null;
+	}
 	constructor (props) {
 		super(props);
 		this.state = {
 			inputWidth: props.minWidth,
 			inputId: props.id || generateId(),
+			prevId: props.id,
 		};
 	}
 	componentDidMount () {
 		this.mounted = true;
 		this.copyInputStyles();
 		this.updateInputWidth();
-	}
-	UNSAFE_componentWillReceiveProps (nextProps) {
-		const { id } = nextProps;
-		if (id !== this.props.id) {
-			this.setState({ inputId: id || generateId() });
-		}
 	}
 	componentDidUpdate (prevProps, prevState) {
 		if (prevState.inputWidth !== this.state.inputWidth) {
