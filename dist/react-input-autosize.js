@@ -252,6 +252,14 @@ var generateId = function generateId() {
 
 var AutosizeInput = function (_Component) {
 	inherits(AutosizeInput, _Component);
+	createClass(AutosizeInput, null, [{
+		key: 'getDerivedStateFromProps',
+		value: function getDerivedStateFromProps(props, state) {
+			var id = props.id;
+
+			return id !== state.prevId ? { inputId: id || generateId(), prevId: id } : null;
+		}
+	}]);
 
 	function AutosizeInput(props) {
 		classCallCheck(this, AutosizeInput);
@@ -275,7 +283,8 @@ var AutosizeInput = function (_Component) {
 
 		_this.state = {
 			inputWidth: props.minWidth,
-			inputId: props.id || generateId()
+			inputId: props.id || generateId(),
+			prevId: props.id
 		};
 		return _this;
 	}
@@ -286,15 +295,6 @@ var AutosizeInput = function (_Component) {
 			this.mounted = true;
 			this.copyInputStyles();
 			this.updateInputWidth();
-		}
-	}, {
-		key: 'UNSAFE_componentWillReceiveProps',
-		value: function UNSAFE_componentWillReceiveProps(nextProps) {
-			var id = nextProps.id;
-
-			if (id !== this.props.id) {
-				this.setState({ inputId: id || generateId() });
-			}
 		}
 	}, {
 		key: 'componentDidUpdate',
