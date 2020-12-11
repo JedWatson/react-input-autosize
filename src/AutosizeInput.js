@@ -45,7 +45,7 @@ const generateId = () => {
 };
 
 class AutosizeInput extends Component {
-	static getDerivedStateFromProps(props, state) {
+	static getDerivedStateFromProps (props, state) {
 		const { id } = props;
 		return id !== state.prevId ? { inputId: id || generateId(), prevId: id } : null;
 	}
