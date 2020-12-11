@@ -1,5 +1,13 @@
 # react-input-autosize
+
+## v3.0.0 / 2020-12-11
+
+This release adds support for React 17 and removes usage of UNSAFE React lifecycle methods, thanks to [Nathan Bierema](https://github.com/Methuselah96).
+
+It should be a fairly painless major upgrade since the API hasn't been changed at all. It's being published as `3.0.0` because the peer dependency range has been updated and the internal implementation has changed.
+
 ## v2.2.2 / 2019-01-10
+
 * added UNSAFE prefix to out of date react lifecycle hooks. thanks [RanneyD](https://github.com/ranneyd)
 
 ## v2.2.1 / 2018-01-10
