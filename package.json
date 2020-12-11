@@ -55,10 +55,9 @@
   },
   "scripts": {
     "build": "NODE_ENV=production nps build",
-    "build:examples": "nps examples",
+    "build-examples": "nps examples",
     "deploy": "nps examples && gh-pages -d examples/dist",
     "lint": "eslint ./; true",
-    "publish-examples": "NODE_ENV=production nps publish",
     "start": "webpack-dev-server --progress",
     "test": "jest; true"
   },
