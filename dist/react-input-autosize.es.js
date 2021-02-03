@@ -303,6 +303,7 @@ var AutosizeInput = function (_Component) {
 	}, {
 		key: 'componentWillUnmount',
 		value: function componentWillUnmount() {
+			cancelAnimationFrame(this.raf);
 			this.mounted = false;
 		}
 	}, {
@@ -323,26 +324,32 @@ var AutosizeInput = function (_Component) {
 	}, {
 		key: 'updateInputWidth',
 		value: function updateInputWidth() {
-			if (!this.mounted || !this.sizer || typeof this.sizer.scrollWidth === 'undefined') {
-				return;
-			}
-			var newInputWidth = void 0;
-			if (this.props.placeholder && (!this.props.value || this.props.value && this.props.placeholderIsMinWidth)) {
-				newInputWidth = Math.max(this.sizer.scrollWidth, this.placeHolderSizer.scrollWidth) + 2;
-			} else {
-				newInputWidth = this.sizer.scrollWidth + 2;
-			}
-			// add extraWidth to the detected width. for number types, this defaults to 16 to allow for the stepper UI
-			var extraWidth = this.props.type === 'number' && this.props.extraWidth === undefined ? 16 : parseInt(this.props.extraWidth) || 0;
-			newInputWidth += extraWidth;
-			if (newInputWidth < this.props.minWidth) {
-				newInputWidth = this.props.minWidth;
-			}
-			if (newInputWidth !== this.state.inputWidth) {
-				this.setState({
-					inputWidth: newInputWidth
-				});
-			}
+			var _this2 = this;
+
+			cancelAnimationFrame(this.raf);
+
+			this.raf = requestAnimationFrame(function () {
+				if (!_this2.mounted || !_this2.sizer || typeof _this2.sizer.scrollWidth === 'undefined') {
+					return;
+				}
+				var newInputWidth = void 0;
+				if (_this2.props.placeholder && (!_this2.props.value || _this2.props.value && _this2.props.placeholderIsMinWidth)) {
+					newInputWidth = Math.max(_this2.sizer.scrollWidth, _this2.placeHolderSizer.scrollWidth) + 2;
+				} else {
+					newInputWidth = _this2.sizer.scrollWidth + 2;
+				}
+				// add extraWidth to the detected width. for number types, this defaults to 16 to allow for the stepper UI
+				var extraWidth = _this2.props.type === 'number' && _this2.props.extraWidth === undefined ? 16 : parseInt(_this2.props.extraWidth) || 0;
+				newInputWidth += extraWidth;
+				if (newInputWidth < _this2.props.minWidth) {
+					newInputWidth = _this2.props.minWidth;
+				}
+				if (newInputWidth !== _this2.state.inputWidth) {
+					_this2.setState({
+						inputWidth: newInputWidth
+					});
+				}
+			});
 		}
 	}, {
 		key: 'getInput',

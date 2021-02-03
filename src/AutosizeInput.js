@@ -71,6 +71,7 @@ class AutosizeInput extends Component {
 		this.updateInputWidth();
 	}
 	componentWillUnmount () {
+		cancelAnimationFrame(this.raf);
 		this.mounted = false;
 	}
 	inputRef = (el) => {
@@ -99,27 +100,31 @@ class AutosizeInput extends Component {
 		}
 	}
 	updateInputWidth () {
-		if (!this.mounted || !this.sizer || typeof this.sizer.scrollWidth === 'undefined') {
-			return;
-		}
-		let newInputWidth;
-		if (this.props.placeholder && (!this.props.value || (this.props.value && this.props.placeholderIsMinWidth))) {
-			newInputWidth = Math.max(this.sizer.scrollWidth, this.placeHolderSizer.scrollWidth) + 2;
-		} else {
-			newInputWidth = this.sizer.scrollWidth + 2;
-		}
-		// add extraWidth to the detected width. for number types, this defaults to 16 to allow for the stepper UI
-		const extraWidth = (this.props.type === 'number' && this.props.extraWidth === undefined)
-			? 16 : parseInt(this.props.extraWidth) || 0;
-		newInputWidth += extraWidth;
-		if (newInputWidth < this.props.minWidth) {
-			newInputWidth = this.props.minWidth;
-		}
-		if (newInputWidth !== this.state.inputWidth) {
-			this.setState({
-				inputWidth: newInputWidth,
-			});
-		}
+		cancelAnimationFrame(this.raf);
+
+		this.raf = requestAnimationFrame(() => {
+			if (!this.mounted || !this.sizer || typeof this.sizer.scrollWidth === 'undefined') {
+				return;
+			}
+			let newInputWidth;
+			if (this.props.placeholder && (!this.props.value || (this.props.value && this.props.placeholderIsMinWidth))) {
+				newInputWidth = Math.max(this.sizer.scrollWidth, this.placeHolderSizer.scrollWidth) + 2;
+			} else {
+				newInputWidth = this.sizer.scrollWidth + 2;
+			}
+			// add extraWidth to the detected width. for number types, this defaults to 16 to allow for the stepper UI
+			const extraWidth = (this.props.type === 'number' && this.props.extraWidth === undefined)
+				? 16 : parseInt(this.props.extraWidth) || 0;
+			newInputWidth += extraWidth;
+			if (newInputWidth < this.props.minWidth) {
+				newInputWidth = this.props.minWidth;
+			}
+			if (newInputWidth !== this.state.inputWidth) {
+				this.setState({
+					inputWidth: newInputWidth,
+				});
+			}
+		})
 	}
 	getInput () {
 		return this.input;
