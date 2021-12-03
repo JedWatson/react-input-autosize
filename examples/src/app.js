@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import AutosizeInput from 'react-input-autosize';
+import AutosizeInput from '../../src/AutosizeInput';
 
 import './example.less';
 
@@ -30,6 +30,13 @@ class App extends Component {
 					autoFocus
 					value={this.state.value1}
 					onChange={this.updateInputValue.bind(this, 'value1')}
+					placeholder={'0'}
+					type={'number'}
+					step={'0.10'}
+					inputMode={'decimal'}
+					min={0.01}
+					max={1000000}
+					pattern={'[0-9]*'}
 				/>
 				<h3>Styled example with default value:</h3>
 				<AutosizeInput
