@@ -1,0 +1,14 @@
+name: 'Pull request'
+
+on: pull_request
+
+jobs:
+    pull-request-created:
+        name: 'Pull request created'
+        runs-on: ubuntu-latest
+        steps:
+            - name: 'Checkout'
+              uses: actions/checkout@v2
+
+            - uses: mansona/npm-lockfile-version@v1
+              
