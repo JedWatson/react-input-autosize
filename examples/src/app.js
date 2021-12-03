@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import AutosizeInput from 'react-input-autosize';
+import AutosizeInput from '../../src/AutosizeInput';
 
 import './example.less';
 
