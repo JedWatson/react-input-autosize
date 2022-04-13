@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import AutosizeInput from 'react-input-autosize';
 
 import './example.less';
@@ -66,4 +66,5 @@ class App extends Component {
 	}
 };
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const root = createRoot(document.getElementById('app'));
+root.render(<App />);
